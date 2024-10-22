@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07b738becbd473c92520c1cdf024b76, type: 3}
+  m_Name: Weapon (Melee)
+  m_EditorClassIdentifier: 
+  m_Id:
+    m_SerializedID:
+      m_String: 121b09c2-27c2-42d7-9a47-9dea19f30082
+  m_Title:
+    m_Property:
+      rid: 5668441151273697382
+  m_Description:
+    m_Property:
+      rid: 5668441151273697383
+  m_Icon:
+    m_Property:
+      rid: 5668441151273697384
+  m_Color:
+    m_Property:
+      rid: 5668441151273697385
+  m_HitReaction: {fileID: 0}
+  m_ParriedReaction: {fileID: 0}
+  m_OnEquip:
+    m_Instructions:
+      m_Instructions: []
+  m_OnUnequip:
+    m_Instructions:
+      m_Instructions: []
+  m_OnDodge:
+    m_Instructions:
+      m_Instructions: []
+  m_Shield: {fileID: 0}
+  m_State:
+    m_StateType: 2
+    m_AnimationClip:
+      m_Property:
+        rid: 5668441151273697386
+    m_RuntimeController: {fileID: 0}
+    m_State: {fileID: 0}
+    m_AvatarMask: {fileID: 0}
+  m_Layer:
+    m_Property:
+      rid: 5668441151273697387
+  m_Combos:
+    m_CombosFrom: 1
+    m_CombosAsset: {fileID: 0}
+    m_CombosEmbed:
+      rid: 5668441151273697388
+  references:
+    version: 2
+    RefIds:
+    - rid: 5668441151273697382
+      type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data:
+        m_Value: 
+    - rid: 5668441151273697383
+      type: {class: GetStringTextArea, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data:
+        m_Text:
+          m_Text: 
+    - rid: 5668441151273697384
+      type: {class: GetSpriteNone, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data: 
+    - rid: 5668441151273697385
+      type: {class: GetColorColorsWhite, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data: 
+    - rid: 5668441151273697386
+      type: {class: GetAnimationInstance, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data:
+        m_Value: {fileID: 0}
+    - rid: 5668441151273697387
+      type: {class: GetDecimalInteger, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data:
+        m_Value: 5
+    - rid: 5668441151273697388
+      type: {class: ComboTree, ns: GameCreator.Runtime.Melee, asm: GameCreator.Runtime.Melee}
+      data:
+        m_Dirty: 29648
+        m_Data:
+          m_Keys: 217b984d
+          m_Values:
+          - m_Id: 1301838625
+            m_Value:
+              rid: 5668441151273697391
+        m_Nodes:
+          m_Keys: 217b984d
+          m_Values:
+          - m_Id: 1301838625
+            m_Parent: -1
+            m_Children: 
+        m_Roots: 217b984d
+    - rid: 5668441151273697391
+      type: {class: ComboItem, ns: GameCreator.Runtime.Melee, asm: GameCreator.Runtime.Melee}
+      data:
+        m_IsDisabled: 0
+        m_Key: 0
+        m_Mode: 0
+        m_When: 1
+        m_AutoRelease: 0
+        m_Timeout:
+          m_Property:
+            rid: 5668441151273697392
+        m_HasDelay:
+          m_IsEnabled: 0
+          m_Value: 0.5
+        m_Conditions:
+          m_Conditions:
+            m_Conditions: []
+        m_Skill: {fileID: 11400000, guid: bceddaa5d5d9aa340bf5127c57a4f39a, type: 2}
+    - rid: 5668441151273697392
+      type: {class: GetDecimalConstantOne, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
+      data: 
