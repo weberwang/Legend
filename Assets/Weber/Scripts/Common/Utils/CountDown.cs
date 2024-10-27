@@ -12,6 +12,8 @@ namespace Weber.Scripts.Common.Utils
         [SerializeField] private int amount = -1;
 
         private double _cooldown;
+
+        public double Cooldown => cooldown;
         private double _interval;
         private double _duration;
         private int _amount;
@@ -60,6 +62,11 @@ namespace Weber.Scripts.Common.Utils
             _end = false;
         }
 
+        public CountDown Clone()
+        {
+            return new CountDown(cooldown, duration, interval, amount);
+        }
+
         public bool OnUpdate()
         {
             if (_end) return false;
@@ -67,6 +74,13 @@ namespace Weber.Scripts.Common.Utils
             if (!_turnOn)
             {
                 return false;
+            }
+
+            if (duration <= 0 && interval <= 0)
+            {
+                CheckAmount();
+                _turnOn = false;
+                return true;
             }
 
             _interval -= Time.deltaTime;

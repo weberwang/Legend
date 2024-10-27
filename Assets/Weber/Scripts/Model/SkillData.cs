@@ -14,7 +14,8 @@ namespace Weber.Scripts.Model
     [CreateAssetMenu(fileName = "SkillData", menuName = "Weber/Skill/SkillData", order = 0)]
     public class SkillData : ScriptableObject
     {
-        [SerializeField] private UniqueID ID = new UniqueID(UniqueID.GenerateID());
+        public UniqueID ID = new UniqueID(UniqueID.GenerateID());
+        public ClassType classType = ClassType.Special;
         public int maxLevel;
         public string skillName;
         [TextArea] public string description;
@@ -31,7 +32,7 @@ namespace Weber.Scripts.Model
             Level = 1;
         }
 
-        public virtual bool Upgrade(CharacterUnit characterUnit, LearnSkill learnSkill)
+        public virtual bool Upgrade(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
         {
             if (!Learned) return false;
             if (Level < maxLevel)
@@ -44,28 +45,28 @@ namespace Weber.Scripts.Model
             return false;
         }
 
-        public virtual void UpdateSkill(CharacterUnit characterUnit, LearnSkill learnSkill)
+        protected virtual void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
         {
-            characterUnit.UpdateAttribute(learnSkill.id, GetChangeValue(learnSkill));
+            characterUnit.UpdateStat(learnSkill);
         }
 
-        public float GetChangeValue(LearnSkill learnSkill)
-        {
-            for (int i = 0; i < stats.Length; i++)
-            {
-                if (stats[i].stat.ID.String == learnSkill.id)
-                {
-                    return stats[i].CalculateValue(learnSkill.value);
-                }
-            }
-
-            return 0;
-        }
-
-        public SkillEffectStatValue ChoiceAttribute()
+        public SkillEffectStatValue ChoiceSkillEffectStatValue()
         {
             var index = Random.Range(0, stats.Length);
             return stats[index];
+        }
+
+        public SkillEffectStatValue GetSkillEffectStatValueWithStatID(string statID)
+        {
+            for (int i = 0; i < stats.Length; i++)
+            {
+                if (stats[i].stat.ID.String == statID)
+                {
+                    return stats[i];
+                }
+            }
+
+            return null;
         }
     }
 
@@ -75,34 +76,32 @@ namespace Weber.Scripts.Model
     {
         public Stat stat;
         public float value;
-        public BaseValueType changeValueType = BaseValueType.Fixed;
+        public ModifierType changeValueType = ModifierType.Constant;
 
-        public float CalculateValue(float value)
+        public SkillEffectStatValue(Stat stat, float value, ModifierType changeValueType)
+        {
+            this.stat = stat;
+            this.value = value;
+            this.changeValueType = changeValueType;
+        }
+
+        public float Value(float changeValue)
         {
             switch (changeValueType)
             {
-                case BaseValueType.Fixed:
-                    return value;
-                case BaseValueType.Percent:
-                    return value * this.value;
-                default:
-                    return 0;
+                case ModifierType.Constant:
+                    return changeValue;
+                case ModifierType.Percent:
+                    return value * changeValue;
             }
+
+            return 0;
         }
-    }
 
-    [Serializable]
-    public struct SkillEffectAttribute
-    {
-        public Attribute attribute;
-        public float value;
-    }
-
-    [Serializable]
-    public struct LearnSkill
-    {
-        public string id;
-        public float value;
+        public SkillEffectStatValue Clone()
+        {
+            return new SkillEffectStatValue(stat, value, changeValueType);
+        }
     }
 
     [Serializable]
@@ -114,9 +113,10 @@ namespace Weber.Scripts.Model
     }
 
     [Serializable]
-    public enum EffectType
+    public enum ClassType
     {
-        Attribute,
-        Stat
+        Special,
+        Common,
+        Base
     }
 }

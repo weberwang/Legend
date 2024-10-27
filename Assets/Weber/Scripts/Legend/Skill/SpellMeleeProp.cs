@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -15,15 +16,22 @@ namespace Weber.Scripts.Legend.Skill
         [SerializeField] private LayerMask _layerMask = -1;
         [SerializeField] private float _hitGap = 0.2f;
         [SerializeField] private int _prediction = 1;
+        [SerializeField] private float _delay = 0;
 
         [SerializeField] private Transform _section;
         [SerializeReference] private TStrikerShape _shape = new StrikerSphere();
 
         private Dictionary<int, float> _attackedTargets = new Dictionary<int, float>();
 
-        protected override void OnActive()
+        public override void OnActive()
         {
             base.OnActive();
+            StartCoroutine("WaitAttack");
+        }
+
+        private IEnumerator WaitAttack()
+        {
+            yield return new WaitForSeconds(_delay);
             var hits = new List<StrikeOutput>();
             var strikeOutputs = _shape.Collect(_section, _layerMask, _prediction);
             // 更新每个目标的冷却时间
@@ -62,10 +70,11 @@ namespace Weber.Scripts.Legend.Skill
             }
         }
 
-        protected override void OnDeactive()
+        public override void OnDeactive()
         {
             base.OnDeactive();
             _attackedTargets.Clear();
+            StopAllCoroutines();
         }
 
         private void Attack(CharacterUnit target)

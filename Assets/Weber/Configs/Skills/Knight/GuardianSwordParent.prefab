@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8327466496248747489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4953131614010911001}
+  - component: {fileID: 3593783129170531824}
+  - component: {fileID: 3631654348494333271}
+  m_Layer: 0
+  m_Name: GuardianSwordParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4953131614010911001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8327466496248747489}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3593783129170531824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8327466496248747489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c924eacff884626a5aa4c90cf311c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Class: {fileID: 11400000, guid: 09bb8f23812e4a4448c7feb938f2e0e4, type: 2}
+  m_OverrideAttributes:
+    m_Keys: []
+    m_Values: []
+  m_OverrideStats:
+    m_Keys:
+    - m_String: Cooldown
+    - m_String: Damage
+    - m_String: Critical-Chance
+    - m_String: Critical-Damage
+    - m_String: Spell-Size
+    m_Values:
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+--- !u!114 &3631654348494333271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8327466496248747489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a708b263e2b4da28e38746aee98d846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderObject: {fileID: 0}
+  _bindType: 1
+  _followSpeed: 0
+  _handleField:
+    m_Type: 0
+    m_Bone:
+      m_Type: 1
+      m_Human: 18
+      m_Path: 
+    m_LocalPosition: {x: 0, y: 0, z: 0}
+    m_LocalRotation: {x: 0, y: 0, z: 0}
+    m_Handle: {fileID: 0}
+  _offset: {x: 0, y: 0, z: 0}
+  update: 1
+  _attackProp: {fileID: 1530428944913847113, guid: 9eda36f5cc80a49409b09898cef4a239,
+    type: 3}

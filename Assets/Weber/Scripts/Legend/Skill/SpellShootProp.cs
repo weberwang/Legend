@@ -47,7 +47,7 @@ namespace Weber.Scripts.Legend.Skill
         private bool IsTracer => _mode == SpellBulletMode.UseTracer;
         private bool HasImpactEffect => _impactEffect != null;
 
-        protected override void OnActive()
+        public override void OnActive()
         {
             base.OnActive();
             for (int i = 0; i < _muzzles.Length; i++)

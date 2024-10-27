@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
-using GameCreator.Runtime.Stats;
-using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Weber.Scripts.Common.Utils;
@@ -16,6 +14,12 @@ namespace Weber.Scripts.Model
     [CreateAssetMenu(fileName = "AttackSkillData", menuName = "Weber/Skill/AttackSkillData", order = 1)]
     public class AttackSkillData : SkillData
     {
+        public enum AttackTimes
+        {
+            Single,
+            Multiple,
+        }
+
         public CountDown countDown;
         public SkillType skillType = SkillType.Melee;
 
@@ -57,53 +61,24 @@ namespace Weber.Scripts.Model
             }
         }
 
-        public override bool Upgrade(CharacterUnit characterUnit, LearnSkill learnSkill)
-        {
-            var success = base.Upgrade(characterUnit, learnSkill);
-            if (success)
-            {
-                CreateBattleProp(characterUnit, learnSkill);
-            }
-
-            return success;
-        }
-
         private void CreateBattleProp(CharacterUnit characterUnit)
         {
-            if (battlePropPrefab != null)
+            if (battlePropPrefab != null && _battleProp == null)
             {
                 var propInstance = PoolManager.Instance.Pick(battlePropPrefab.gameObject, 1);
                 var prop = propInstance.Get<BattleProp>();
                 prop.SetUnitTarget(characterUnit, this);
                 characterUnit.AddBattleProp(prop);
+                _battleProp = prop;
             }
         }
 
-        private void CreateBattleProp(CharacterUnit characterUnit, LearnSkill learnSkill)
+        protected override void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
         {
             CreateBattleProp(characterUnit);
-            UpdateSkill(characterUnit, learnSkill);
-        }
-
-        public override void UpdateSkill(CharacterUnit characterUnit, LearnSkill learnSkill)
-        {
-            if (_battleProp != null)
-            {
-                _battleProp.UpdateSkill(learnSkill);
-            }
+            if (_battleProp != null) _battleProp.UpdateSkill(learnSkill);
         }
     }
-
-    // [Serializable]
-    // public class SkillHitStatusEffect
-    // {
-    //     // public HitEffectType type;
-    //     public int maxStack = 1;
-    //     public float duration;
-    //     public float interval;
-    //     public SkillEffectStatValue skillValue;
-    //     public BaseSkillHitEffect baseSkillHitEffect;
-    // }
 
 
     public enum SkillType

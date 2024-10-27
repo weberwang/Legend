@@ -7,6 +7,8 @@ using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Shooter;
 using GameCreator.Runtime.Stats;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Legend.Skill;
 using Weber.Scripts.Legend.SkillHitEffect;
 using Weber.Scripts.Model;
@@ -15,18 +17,17 @@ using Random = UnityEngine.Random;
 namespace Weber.Scripts.Legend.Unit
 {
     [RequireComponent(typeof(Character))]
-    public class CharacterUnit : MonoBehaviour
+    public class CharacterUnit : MonoBehaviour, ISignalReceiver
     {
-        [SerializeField] private LayerMask deathLayer;
-        [SerializeField] private SkillManager m_SkillManager;
+        [SerializeField] private LayerMask _deathLayer;
+        [SerializeField] private SkillManager _skillManager;
 
-        [SerializeField] private AnimationClip m_HitClip;
-        [SerializeField] private AnimationClip m_DeathClip;
+        [SerializeField] private AnimationClip _hitClip;
+        [SerializeField] private AnimationClip _deathClip;
         public Character Character { get; private set; }
 
         protected Traits traits;
         public RuntimeAttributeData HealthAttributes { get; private set; }
-        public RuntimeAttributeData DamageAttributes { get; private set; }
 
         private List<BattleProp> _battleProps = new List<BattleProp>();
 
@@ -41,7 +42,9 @@ namespace Weber.Scripts.Legend.Unit
             HealthAttributes = traits.RuntimeAttributes.Get(Constants.TRAITS_HEALTH);
             HealthAttributes.EventChange += OnHealthChange;
             Character.EventDie += OnDie;
+            Signals.Subscribe(this, SignalNames.OnSpellHit);
             OnCreate();
+            _skillManager.InitialSkill();
         }
 
 
@@ -78,19 +81,21 @@ namespace Weber.Scripts.Legend.Unit
 
         public void OnShootHit()
         {
-            var shotData = ShooterWeapon.LastShotData;
-            var source = shotData.Source;
-            var prop = shotData.Prop;
-            var sourceUnit = source.Get<CharacterUnit>();
-            var battleProp = prop.Get<BattleProp>();
-            if (battleProp)
-            {
-                OnSkillHit(battleProp);
-            }
+            OnInitSkillHit();
         }
 
         public void OnMeleeHit()
         {
+            OnInitSkillHit();
+        }
+
+        private void OnInitSkillHit()
+        {
+            var battleProp = GetBattleProp(_skillManager.InitSkillData.ID);
+            if (battleProp)
+            {
+                OnSkillHit(battleProp);
+            }
         }
 
         public void OnHurt(float damage, bool ignoreArmor = false)
@@ -111,11 +116,6 @@ namespace Weber.Scripts.Legend.Unit
             }
         }
 
-        public void ChangeDamage(float damage)
-        {
-            DamageAttributes.Value = damage;
-        }
-
         private void OnHealthChange(IdString arg1, double health)
         {
             if (health <= 0)
@@ -128,7 +128,7 @@ namespace Weber.Scripts.Legend.Unit
             }
         }
 
-        private void OnDie()
+        protected virtual void OnDie()
         {
             for (int i = 0; i < _battleProps.Count; i++)
             {
@@ -141,13 +141,13 @@ namespace Weber.Scripts.Legend.Unit
         private async void Death()
         {
             Character.IsDead = true;
-            await PlayGesture(m_DeathClip);
+            await PlayGesture(_deathClip);
             gameObject.SetActive(false);
         }
 
         private async void Hit()
         {
-            await PlayGesture(m_HitClip);
+            await PlayGesture(_hitClip);
         }
 
         private void EffectWithSkill(BattleProp battleProp)
@@ -178,9 +178,12 @@ namespace Weber.Scripts.Legend.Unit
             await gestureTask;
         }
 
-        public void UpdateAttribute(string attributeID, float value)
+        public void UpdateStat(SkillEffectStatValue skillEffectStatValue)
         {
-            traits.RuntimeAttributes.Get(attributeID).Value += value;
+            for (var i = 0; i < _battleProps.Count; i++)
+            {
+                _battleProps[i].UpdateSkill(skillEffectStatValue);
+            }
         }
 
         public double GetAttribute(string attributeID)
@@ -194,20 +197,57 @@ namespace Weber.Scripts.Legend.Unit
             return 0;
         }
 
-        public double GetStat(string statID)
+        public float GetStat(string statID)
         {
             var stat = traits.RuntimeStats.Get(statID);
             if (stat != null)
             {
-                return stat.Value;
+                return Convert.ToSingle(stat.Value);
             }
 
             return 0;
         }
 
+        public RuntimeStatData GetRuntimeStatData(string statID)
+        {
+            return traits.RuntimeStats.Get(statID);
+        }
+
         public void AddBattleProp(BattleProp battleProp)
         {
             _battleProps.Add(battleProp);
+        }
+
+        public BattleProp GetBattleProp(UniqueID skillID)
+        {
+            for (int i = 0; i < _battleProps.Count; i++)
+            {
+                if (_battleProps[i].SkillData.ID.Equals(skillID))
+                {
+                    return _battleProps[i];
+                }
+            }
+
+            return null;
+        }
+
+        public void OnReceiveSignal(SignalArgs args)
+        {
+            if (Character.IsDead) return;
+            if (args.signal == SignalNames.OnSpellHit)
+            {
+                OnSkillHit(args.invoker.Get<BattleProp>());
+            }
+        }
+        
+        public UpgradeSkillData[] ChoiceSkillDatas()
+        {
+            return _skillManager.ChoiceSkillDatas();
+        }
+
+        public void LearnSkill(string skillID, SkillEffectStatValue skillEffectStatValue)
+        {
+            _skillManager.LearnSkill(skillID, skillEffectStatValue);
         }
     }
 }

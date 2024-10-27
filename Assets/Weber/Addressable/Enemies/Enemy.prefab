@@ -1698,7 +1698,7 @@ MonoBehaviour:
           m_Acceleration: 10
           m_Deceleration: 4
         m_Jump:
-          m_CanJump: 1
+          m_CanJump: 0
           m_AirJumps: 0
           m_JumpForce: 5
           m_JumpCooldown: 0.5
@@ -1753,7 +1753,7 @@ MonoBehaviour:
             rid: 5668441215126471126
         m_RandomRaduis: 3
         m_NearDistance: 2
-        m_CheckPathInterval: 0.5
+        m_CheckPathInterval: 1
     - rid: 5668441215126471125
       type: {class: AxonometryNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
@@ -1876,12 +1876,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06328b99ece34784be7b7063d05701dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathLayer:
+  _deathLayer:
     serializedVersion: 2
     m_Bits: 0
-  m_SkillManager: {fileID: 0}
-  m_HitClip: {fileID: 0}
-  m_DeathClip: {fileID: 0}
+  _skillManager: {fileID: 0}
+  _hitClip: {fileID: 0}
+  _deathClip: {fileID: 0}
 --- !u!114 &-1763217134200715524
 MonoBehaviour:
   m_ObjectHideFlags: 0

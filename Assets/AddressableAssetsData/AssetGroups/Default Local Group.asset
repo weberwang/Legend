@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c564c8c0d0cdc45429417f315e9f3e41
-    m_Address: Assets/Weber/Addressable/Enemies/Enemy_0.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f0b8fe27fdce202419484737b8e59dee
     m_Address: Assets/Weber/Addressable/Config/HeroSkillLevelValue.asset
     m_ReadOnly: 0

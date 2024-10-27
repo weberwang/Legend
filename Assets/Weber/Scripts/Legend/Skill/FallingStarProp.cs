@@ -11,7 +11,7 @@ namespace Weber.Scripts.Legend.Skill
         [SerializeField] private float _randomRadius;
         [SerializeField] private float _heightOffset;
 
-        protected override void OnActive()
+        public override void OnActive()
         {
             //在角色半径外找一个最近的敌人
             var enemies = EnemyFactory.Instance.Enemies;

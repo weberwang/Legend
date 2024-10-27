@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cb1bc535cc4ed5985e2909fc38a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Hero: {fileID: 8845573155991781385, guid: 98dd330f734300a4fb53ac155de95f05, type: 3}
+  _heroPrefab: {fileID: 3767397507409206557, guid: 3e8f0761b6c8f65448387f8dc66d29d9,
+    type: 3}
 --- !u!1 &499735341
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,9 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af511a4c6dd81ba478db11563a1d1d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prototypeList:
-  - {fileID: 11400000, guid: 235da208f97a8974aa492dc459ee28cd, type: 2}
-  - {fileID: 11400000, guid: bdc6c8b61a7b01442ba8d631ed5bcf78, type: 2}
+  prototypeList: []
   autoSelectCamera: 1
   cameraData:
     mainCamera: {fileID: 835060138}
@@ -204,7 +203,7 @@ MonoBehaviour:
   applyFloatingOriginRotationAndScale: 0
   floatingOriginTransform: {fileID: 0}
   isFrustumCulling: 1
-  isOcclusionCulling: 1
+  isOcclusionCulling: 0
   minCullingDistance: 0
   selectedPrototypeList:
   - {fileID: 11400000, guid: 235da208f97a8974aa492dc459ee28cd, type: 2}
@@ -223,14 +222,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   lightProbeDisabled: 0
-  registeredPrefabs:
-  - prefabPrototype: {fileID: 11400000, guid: 235da208f97a8974aa492dc459ee28cd, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: bdc6c8b61a7b01442ba8d631ed5bcf78, type: 2}
-    registeredPrefabs: []
-  prefabList:
-  - {fileID: 5352958571798197664, guid: c564c8c0d0cdc45429417f315e9f3e41, type: 3}
-  - {fileID: 1328023254706044480, guid: 257c304c754d3b247a51ef5bea7a90d0, type: 3}
+  registeredPrefabs: []
+  prefabList: []
   enableMROnManagerDisable: 1
   enableMROnRemoveInstance: 1
   animationEvents: []
@@ -279,8 +272,8 @@ Transform:
   m_GameObject: {fileID: 565015704}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.79, y: 0, z: 3.04}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.79, y: 1.63, z: 3.04}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1705620496}
@@ -509,13 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a61b0404ba3e80438650c720ee964b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prototypeList:
-  - {fileID: 11400000, guid: 5a4b174d79e32d84f9c09a2df5350429, type: 2}
-  - {fileID: 11400000, guid: 132a7372e13c3d944a677279fc73271f, type: 2}
-  - {fileID: 11400000, guid: 104a7fc2ab93c494c867ca23ae3a3f20, type: 2}
-  - {fileID: 11400000, guid: 057e49960879d63408a0fbdddeff1826, type: 2}
-  - {fileID: 11400000, guid: df717858f1238a944b0c2ecd04cea052, type: 2}
-  - {fileID: 11400000, guid: 587fad191c3c6ed47bd75ab3c0c615e9, type: 2}
+  prototypeList: []
   autoSelectCamera: 1
   cameraData:
     mainCamera: {fileID: 835060138}
@@ -524,10 +511,9 @@ MonoBehaviour:
   applyFloatingOriginRotationAndScale: 0
   floatingOriginTransform: {fileID: 0}
   isFrustumCulling: 1
-  isOcclusionCulling: 1
+  isOcclusionCulling: 0
   minCullingDistance: 0
-  selectedPrototypeList:
-  - {fileID: 11400000, guid: 587fad191c3c6ed47bd75ab3c0c615e9, type: 2}
+  selectedPrototypeList: []
   isPrototypeTextMode: 0
   showSceneSettingsBox: 1
   showPrototypeBox: 1
@@ -543,26 +529,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   lightProbeDisabled: 0
-  registeredPrefabs:
-  - prefabPrototype: {fileID: 11400000, guid: 5a4b174d79e32d84f9c09a2df5350429, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: 132a7372e13c3d944a677279fc73271f, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: 104a7fc2ab93c494c867ca23ae3a3f20, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: 057e49960879d63408a0fbdddeff1826, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: df717858f1238a944b0c2ecd04cea052, type: 2}
-    registeredPrefabs: []
-  - prefabPrototype: {fileID: 11400000, guid: 587fad191c3c6ed47bd75ab3c0c615e9, type: 2}
-    registeredPrefabs: []
-  prefabList:
-  - {fileID: 5610884078883986163, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
-  - {fileID: 8218668140323578366, guid: f0aae4c8b38e02e48a4124483b105340, type: 3}
-  - {fileID: 2495695665250258272, guid: f86f26a978127384b85b71f1235c8ef2, type: 3}
-  - {fileID: 726123980392875945, guid: a611871aa4f987941bf934736c0ee6d7, type: 3}
-  - {fileID: 4263511268534089885, guid: f06068434cc02c941bd2b282c8d154ef, type: 3}
-  - {fileID: 721799927424977100, guid: 0f4330107ea56ca489e01d61f9e8e488, type: 3}
+  registeredPrefabs: []
+  prefabList: []
   enableMROnManagerDisable: 1
   enableMROnRemoveInstance: 1
 --- !u!4 &762709490
@@ -934,7 +902,7 @@ MonoBehaviour:
     - rid: 5668441221372838227
       type: {class: GetDirectionVector, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
-        m_Direction: {x: 0, y: 15, z: -10}
+        m_Direction: {x: 0, y: 12, z: -10}
     - rid: 5668441401148309662
       type: {class: GetGameObjectPlayer, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
@@ -981,8 +949,8 @@ Transform:
   m_GameObject: {fileID: 1549890410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.93, y: 0, z: 1.26}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.93, y: 1.597, z: 1.26}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1705620496}
@@ -1123,8 +1091,8 @@ Transform:
   m_GameObject: {fileID: 1748868810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.41, y: 0, z: -3.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.41, y: 1.73, z: -3.75}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1705620496}

@@ -28,11 +28,11 @@ namespace Weber.Scripts.Legend.Skill
             OnEquip();
         }
 
-        protected override void OnDeactive()
+        public override void OnDeactive()
         {
         }
 
-        protected override void OnActive()
+        public override void OnActive()
         {
             base.OnActive();
             AutoAttack();

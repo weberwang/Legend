@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Unit;
 using Random = UnityEngine.Random;
@@ -9,7 +10,7 @@ namespace Weber.Scripts.Legend
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] private Hero m_Hero;
+        [SerializeField] private Hero _heroPrefab;
 
         private void Awake()
         {
@@ -18,7 +19,7 @@ namespace Weber.Scripts.Legend
 
         private void Start()
         {
-            Instantiate(m_Hero, new Vector3(10, 2, 10), Quaternion.identity);
+            Instantiate(_heroPrefab, new Vector3(10, 1, 10), Quaternion.identity);
             LoadEnemy();
         }
 

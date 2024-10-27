@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Common.Audio;
 using GameCreator.Runtime.Melee;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Legend.Unit;
 
 namespace Weber.Scripts.Legend.Skill
 {
     public class SpellBullet : MonoBehaviour
     {
-        private SpellShootProp.SpellBulletMode _mode;
-        private bool _pierce = false;
-        private Vector3 _tracerDeviation = Vector3.zero;
+        protected SpellShootProp.SpellBulletMode mode;
+        protected bool pierce = false;
+        private Vector3 _tracerDeviation;
         private float _speed;
         private float _lifeTime;
-        private float _maxDistance;
+        protected float maxDistance;
         private LayerMask _hitLayer;
         private GameObject _impactEffect;
 
@@ -24,18 +26,18 @@ namespace Weber.Scripts.Legend.Skill
 
         private AudioClip _impactSound;
 
-        private float _startTime;
+        protected float startTime;
         private float _distance;
 
         private Vector3 _lastPosition;
 
         private RaycastHit[] RAYCAST_HITS = new RaycastHit[100];
 
-        private Vector3 _velocity = Vector3.zero;
+        protected Vector3 velocity = Vector3.zero;
 
-        private Transform _tracerTarget;
-        private SpellShootProp _source;
-        private Vector3 _lastMuzzlePosition;
+        protected Transform tracerTarget;
+        protected SpellShootProp source;
+        protected Vector3 lastMuzzlePosition;
         private List<GameObject> _hits = new List<GameObject>();
 
 
@@ -48,16 +50,19 @@ namespace Weber.Scripts.Legend.Skill
         private float _capsuleHeight;
         private float _capsuleRadius;
 
+        protected bool isBeyondDistance = false;
 
         private void Start()
         {
-            _startTime = Time.time;
+            startTime = Time.time;
             _lastPosition = transform.position;
-            _lastMuzzlePosition = _lastPosition;
-            _isSphere = GetComponent<Collider>().GetType() == typeof(SphereCollider);
+            lastMuzzlePosition = _lastPosition;
+            var collider = GetComponent<Collider>();
+            collider.enabled = false;
+            _isSphere = collider.GetType() == typeof(SphereCollider);
             if (_isSphere)
             {
-                _sphereRadius = GetComponent<SphereCollider>().radius;
+                _sphereRadius = (collider as SphereCollider).radius;
             }
             else
             {
@@ -65,6 +70,12 @@ namespace Weber.Scripts.Legend.Skill
                 _capsuleHeight = capsuleCollider.height;
                 _capsuleRadius = capsuleCollider.radius;
             }
+
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
         }
 
         private void Update()
@@ -82,106 +93,118 @@ namespace Weber.Scripts.Legend.Skill
                 }
             }
 
-            if (_startTime + _lifeTime <= Time.time)
+            if (startTime + _lifeTime <= Time.time)
             {
                 gameObject.SetActive(false);
                 return;
             }
 
             Vector3 direction;
-            if (_tracerTarget != null)
+            switch (mode)
             {
-                direction = UpdateKinematic();
-            }
-            else
-            {
-                switch (_mode)
-                {
-                    case SpellShootProp.SpellBulletMode.UseTracer:
-                        direction = UpdateTracer();
-                        break;
-                    case SpellShootProp.SpellBulletMode.UseKinematic:
+                case SpellShootProp.SpellBulletMode.UseTracer:
+                    if (tracerTarget == null)
+                    {
                         direction = UpdateKinematic();
-                        break;
-                    default: return;
-                }
+                    }
+                    else
+                    {
+                        direction = UpdateTracer();
+                    }
+
+                    break;
+                case SpellShootProp.SpellBulletMode.UseKinematic:
+                    direction = UpdateKinematic();
+                    break;
+                default: return;
             }
 
-
+            direction.y = 0;
             if (direction != Vector3.zero)
             {
                 transform.rotation = Quaternion.LookRotation(direction);
             }
 
-            _distance += Vector3.Distance(this.transform.position, _lastPosition);
+            _distance += Vector3.Distance(transform.position, _lastPosition);
             _lastPosition = transform.position;
 
-            if (_distance >= _maxDistance)
+            if (_distance >= maxDistance)
             {
-                gameObject.SetActive(false);
+                isBeyondDistance = true;
             }
+
+            if (isBeyondDistance)
+            {
+                BeyondDistance();
+            }
+        }
+
+        //超过最大距离
+        protected virtual void BeyondDistance()
+        {
+            gameObject.SetActive(false);
         }
 
         public void SetFromSource(SpellShootProp source, SpellShootProp.SpellBulletMode mode, bool pierce, Vector3 tracerDeviation, float speed, float lifeTime, float maxDistance, LayerMask hitLayer, Vector3 shootDirection, Transform tracerTarget, GameObject impactEffect, float impactEffectDuration, AudioClip impactSound)
         {
-            _source = source;
-            _mode = mode;
-            _pierce = pierce;
+            this.source = source;
+            this.mode = mode;
+            this.pierce = pierce;
             _tracerDeviation = tracerDeviation;
             _speed = speed;
             _lifeTime = lifeTime;
-            _maxDistance = maxDistance;
+            this.maxDistance = maxDistance;
             _hitLayer = hitLayer;
-            _tracerTarget = tracerTarget;
+            this.tracerTarget = tracerTarget;
             _impactEffect = impactEffect;
             _impactEffectDuration = impactEffectDuration;
             _impactSound = impactSound;
 
-            _startTime = Time.time;
+            startTime = Time.time;
             _distance = 0;
             _lastPosition = transform.position;
-            _velocity = shootDirection * _speed;
+            velocity = shootDirection * _speed;
+            _lastPosition = transform.position;
+            lastMuzzlePosition = _lastPosition;
+            _distance = 0;
+            isBeyondDistance = false;
             _hits.Clear();
         }
 
-        private Vector3 UpdateKinematic()
+        protected virtual Vector3 UpdateKinematic()
         {
-            Vector3 attraction = Vector3.zero;
-
-            _velocity += attraction * Time.deltaTime;
-
-            Vector3 deltaTranslation = _velocity * Time.deltaTime;
+            Debug.Log("velocity:" + velocity);
+            Vector3 deltaTranslation = velocity * Time.deltaTime;
             Vector3 nextPosition = transform.position + deltaTranslation;
             Vector3 nextDirection = nextPosition - transform.position;
 
             TryRayHit(nextDirection);
 
             transform.position = nextPosition;
-            return _velocity.normalized;
+            return velocity.normalized;
         }
 
         private Vector3 UpdateTracer()
         {
-            if (_tracerTarget == null) return Vector3.zero;
+            if (tracerTarget == null) return Vector3.zero;
 
             float totalDistance = Vector3.Distance(
-                _tracerTarget.position,
-                _lastMuzzlePosition
+                tracerTarget.position,
+                lastMuzzlePosition
             );
 
-            float elapsedTime = Time.time - _startTime;
+            float elapsedTime = Time.time - startTime;
             float t = _speed * elapsedTime / totalDistance;
 
             Vector3 nextPosition = Bezier.Get(
-                _lastMuzzlePosition,
-                _tracerTarget.position,
+                lastMuzzlePosition,
+                tracerTarget.position,
                 _tracerDeviation,
                 Vector3.zero,
                 t
             );
 
             Vector3 nextDirection = nextPosition - transform.position;
-
             TryRayHit(nextDirection);
 
             transform.position = nextPosition;
@@ -194,7 +217,7 @@ namespace Weber.Scripts.Legend.Skill
             return nextDirection.normalized;
         }
 
-        private void TryRayHit(Vector3 nextDirection)
+        protected void TryRayHit(Vector3 nextDirection)
         {
             int numHits = 0;
             if (_isSphere)
@@ -243,21 +266,20 @@ namespace Weber.Scripts.Legend.Skill
             point2 = center - axis * height;
         }
 
-        private void OnHit(RaycastHit hit)
+        protected virtual void OnHit(RaycastHit hit)
         {
-            var characterUnit = hit.transform.Get<CharacterUnit>();
-            if (characterUnit.Character.IsDead) return;
             if (_hits.Count > 0)
             {
-                if (!_pierce)
+                if (!pierce)
                 {
                     return;
                 }
             }
 
-            if (hit.transform.gameObject == _source.CharacterUnit.gameObject) return;
+            if (hit.transform.gameObject == source.CharacterUnit.gameObject) return;
             if (_hits.Contains(hit.transform.gameObject)) return;
             _hits.Add(hit.transform.gameObject);
+
             if (_impactSound != null)
             {
                 AudioManager.Instance.SoundEffect.Play(_impactSound, AudioConfigSoundEffect.Default, new Args(gameObject));
@@ -270,9 +292,8 @@ namespace Weber.Scripts.Legend.Skill
                 _effectInstance = effectInstance;
             }
 
-
-            characterUnit.OnSkillHit(_source);
-            if (!_pierce)
+            Signals.Emit(new SignalArgs(SignalNames.OnSpellHit, source.gameObject));
+            if (!pierce)
             {
                 gameObject.SetActive(false);
             }

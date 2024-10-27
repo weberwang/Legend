@@ -15,42 +15,42 @@ MonoBehaviour:
   maxLevel: 4
   heroBaseValue:
     skillValues:
-    - skillAttribute: {fileID: 11400000, guid: c4ba38a16342f5d438f30d32b8c309f0, type: 2}
-      skillValue: 20
+    - stat: {fileID: 11400000, guid: c4ba38a16342f5d438f30d32b8c309f0, type: 2}
+      value: 0
       changeValueType: 0
-    - skillAttribute: {fileID: 11400000, guid: 83fcac5a40611304199fc6d5863420fa, type: 2}
-      skillValue: -0.03
+    - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: 5b6752d68e2ace64e961f83d13849d9c, type: 2}
-      skillValue: 0.03
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: 02a20f1b89d7d1e4392fda044bc48e5a, type: 2}
-      skillValue: 0.07
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
-      skillValue: 0.05
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: fc202e9d73c35054a84d64bc29e66d14, type: 2}
-      skillValue: 150
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 0
-    - skillAttribute: {fileID: 11400000, guid: f55236c3e2ee06343b9ce54c818c7338, type: 2}
-      skillValue: 3
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 0
-    - skillAttribute: {fileID: 11400000, guid: 029af27b46b01d448a42d30956de691a, type: 2}
-      skillValue: 4
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 0
-    - skillAttribute: {fileID: 11400000, guid: 9cf9104e218bc444bbf739baa10effc6, type: 2}
-      skillValue: 0.04
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: b6021fc4b181aed4aad9e3384a940d45, type: 2}
-      skillValue: 0.1
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: 87284fdd842f41a46aa1f86adfe54db7, type: 2}
-      skillValue: 1
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 0
-    - skillAttribute: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
-      skillValue: 0.04
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
-    - skillAttribute: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
-      skillValue: 0.03
+    - stat: {fileID: 0}
+      value: 0
       changeValueType: 1
