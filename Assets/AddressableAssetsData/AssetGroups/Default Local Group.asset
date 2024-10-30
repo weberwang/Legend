@@ -15,8 +15,43 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 21bc2f27ca2d83d4f915756af0ee8632
   m_SerializeEntries:
+  - m_GUID: 139e0e3f53859de4888039f0407fd068
+    m_Address: Assets/Weber/Addressable/Config/EnemySpawnConfig_1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19733e9f226cb484da2a78534abf28f5
+    m_Address: Assets/Weber/Addressable/Enemies/Enemy_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1bac5dc405a5dc644aa28f33eec99d08
+    m_Address: Assets/Weber/Addressable/Config/AllHeroData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2747ed23c92e2d94285267acae73aec3
+    m_Address: Assets/Weber/Addressable/Config/StatLevelConfig.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e8f0761b6c8f65448387f8dc66d29d9
+    m_Address: Assets/Weber/Addressable/Players/Knight.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9851b14adfd4763459022206108616fb
     m_Address: Assets/Weber/Addressable/Enemies/Enemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: baffdb275f99ca246ab34f93a8803741
+    m_Address: Assets/Weber/Addressable/Config/LuckConfig.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1b95b8ced6077e41b1798d8177711fa
+    m_Address: Assets/Weber/Addressable/Config/LearnSkillData.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

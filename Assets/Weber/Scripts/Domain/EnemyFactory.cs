@@ -5,7 +5,9 @@ using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Weber.Scripts.Legend.Game;
 using Weber.Scripts.Legend.Unit;
+using Weber.Scripts.Model;
 using Random = UnityEngine.Random;
 
 namespace Weber.Scripts.Domain
@@ -16,8 +18,9 @@ namespace Weber.Scripts.Domain
 
         public List<CharacterUnit> Enemies => m_Enemies;
 
-        private readonly string EnemyPath = "Assets/Weber/Addressable/Enemies/Enemy.prefab";
-        private readonly string EnemyModelPath = "Assets/Weber/Addressable/Enemies/Enemy_{0}.prefab";
+        private const string ENEMY_PATH = "Assets/Weber/Addressable/Enemies/Enemy.prefab";
+        private const string ENEMY_MODEL_PATH = "Assets/Weber/Addressable/Enemies/Enemy_{0}.prefab";
+        private const string ENEMY_SPAWN_PATH = "Assets/Weber/Addressable/Config/EnemySpawnConfig.asset";
 
         private GameObject _enemyPrefab;
 
@@ -29,10 +32,72 @@ namespace Weber.Scripts.Domain
         private int _groundMask;
         private RaycastHit[] _hits = new RaycastHit[1];
 
+        private bool _isGameStarted;
+        private float _startTime;
+
+        private EnemySpawnConfig _currentEnemySpawnConfig;
+
+        //保存每次生成敌人的时间
+        private Dictionary<int, float> _spawnTime = new Dictionary<int, float>();
+
+        //所有掉落物品
+        private List<DropItem> _dropItems = new List<DropItem>();
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void RuntimeInitialize()
         {
             Instance.WakeUp();
+        }
+
+        public async void StartGame(EnemySpawnConfig enemySpawnConfig)
+        {
+            _startTime = 0;
+            _currentEnemySpawnConfig = enemySpawnConfig;
+            List<int> _loadeds = new List<int>();
+            for (int i = 0; i < _currentEnemySpawnConfig.spawnWaves.Count; i++)
+            {
+                if (_loadeds.Contains(_currentEnemySpawnConfig.spawnWaves[i].enemyID))
+                {
+                    continue;
+                }
+
+                await LoadEnemyModel(_currentEnemySpawnConfig.spawnWaves[i].enemyID);
+            }
+
+            while (ShortcutPlayer.Instance is null)
+            {
+                await UniTask.Yield();
+            }
+
+            _isGameStarted = true;
+        }
+
+        private void Update()
+        {
+            if (!_isGameStarted) return;
+            _startTime += Time.deltaTime;
+            //根据_currentEnemySpawnConfig配置生成敌人
+            for (int i = 0; i < _currentEnemySpawnConfig.spawnWaves.Count; i++)
+            {
+                var wave = _currentEnemySpawnConfig.spawnWaves[i];
+                if (_startTime >= wave.startTime && _startTime <= wave.endTime)
+                {
+                    if (_spawnTime.ContainsKey(wave.enemyID))
+                    {
+                        _spawnTime[wave.enemyID] += Time.deltaTime;
+                        if (_spawnTime[wave.enemyID] >= wave.spawnInterval)
+                        {
+                            SpawnWaveEnemies(wave);
+                            _spawnTime[wave.enemyID] = 0;
+                        }
+                    }
+                    else
+                    {
+                        SpawnWaveEnemies(wave);
+                        _spawnTime.Add(wave.enemyID, 0);
+                    }
+                }
+            }
         }
 
         protected override void OnCreate()
@@ -44,16 +109,32 @@ namespace Weber.Scripts.Domain
 
         private async void LoadEnemy()
         {
-            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(EnemyPath);
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(ENEMY_PATH);
             await asyncOperationHandle.Task;
             _enemyPrefab = asyncOperationHandle.Result;
         }
 
-        public async UniTask<Enemy> CreateEnemy(int enemyID)
+        private async UniTask LoadEnemyModel(int enemyID)
         {
-            var enemyModelPath = string.Format(EnemyModelPath, enemyID);
+            var enemyModelPath = string.Format(ENEMY_MODEL_PATH, enemyID);
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enemyModelPath);
             await asyncOperationHandle.Task;
+        }
+
+        public void SpawnWaveEnemies(SpawnWave wave)
+        {
+            for (int i = 0; i < wave.enemyCount; i++)
+            {
+                CreateEnemy(wave.enemyID);
+            }
+        }
+
+        public async UniTask<Enemy> CreateEnemy(int enemyID)
+        {
+            var enemyModelPath = string.Format(ENEMY_MODEL_PATH, enemyID);
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enemyModelPath);
+            await asyncOperationHandle.Task;
+            var model = asyncOperationHandle.Result;
             Vector3 targetPosition;
             while (!SpawnEnemyOffScreen(out targetPosition))
             {
@@ -63,9 +144,15 @@ namespace Weber.Scripts.Domain
             targetPosition.y = 1;
             var enemyInstance = PoolManager.Instance.Pick(_enemyPrefab, targetPosition, Quaternion.identity, 1);
             var enemy = enemyInstance.Get<Enemy>();
-            enemy.Character.ChangeModel(asyncOperationHandle.Result, new Character.ChangeOptions());
+            enemy.Character.ChangeModel(model, new Character.ChangeOptions());
+            enemy.OnDeath += OnEnemyDeath;
             m_Enemies.Add(enemy);
             return enemy;
+        }
+
+        private void OnEnemyDeath(EnemyData enemyData)
+        {
+            //todo 生成掉落物品
         }
 
         private bool SpawnEnemyOffScreen(out Vector3 position)
@@ -104,7 +191,7 @@ namespace Weber.Scripts.Domain
             }
 
             // 确保与玩家保持一定距离
-            if (Vector3.Distance(spawnPosition, ShortcutPlayer.Instance.transform.position) < _minDistanceFromPlayer)
+            if (Vector3.Distance(spawnPosition, ShortcutPlayer.Transform.position) < _minDistanceFromPlayer)
             {
                 position = Vector3.zero;
                 return false;

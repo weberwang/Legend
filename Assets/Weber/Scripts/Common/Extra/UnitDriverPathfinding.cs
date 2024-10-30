@@ -15,7 +15,7 @@ namespace Weber.Scripts.Common.Extra
         "Moves the Character using A* Pathfinding. "
     )]
     [Serializable]
-    public class UnitDriverPathfinding : UnitDriverController
+    public class UnitDriverPathfinding : UnitDriverTopDown
     {
         enum TrackType
         {
@@ -70,8 +70,8 @@ namespace Weber.Scripts.Common.Extra
 
         protected override void UpdateTranslation(IUnitMotion motion)
         {
-            if (_targetObject == null) return;
-            AIMove();
+            if (_targetObject is null) return;
+            // AIMove();
             if (Vector3.Distance(Transform.position, _targetObject.transform.position) < m_NearDistance)
             {
                 _offsetRadius = 0;
@@ -84,7 +84,7 @@ namespace Weber.Scripts.Common.Extra
 
         private void AIMove()
         {
-            if (!m_CanMove || m_Target == null) return;
+            if (!m_CanMove || m_Target is null) return;
             _lastCheckTime -= Time.deltaTime;
             if (_lastCheckTime > 0) return;
             switch (m_TrackType)
@@ -109,7 +109,7 @@ namespace Weber.Scripts.Common.Extra
 
         private void InterceptTarget()
         {
-            if (_targetObject == null) return;
+            if (_targetObject is null) return;
 
             Vector3 targetPosition = _targetObject.transform.position;
             Vector3 targetVelocity = _targetObject.GetComponent<Character>().Motion.MoveDirection;

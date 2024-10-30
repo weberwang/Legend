@@ -5,14 +5,14 @@ namespace Weber.Scripts.Model
 {
     public class UpgradeSkillData
     {
-        public string skillID;
+        public SkillData skillData;
         public LuckConfig.SkillRarity skillRarity;
         public SkillEffectStatValue skillEffectStatValue;
 
-        public UpgradeSkillData(string skillID, LuckConfig.SkillRarity skillRarity, SkillEffectStatValue skillEffectStatValue)
+        public UpgradeSkillData(SkillData skillData, LuckConfig.SkillRarity skillRarity, SkillEffectStatValue skillEffectStatValue)
         {
-            this.skillID = skillID;
-            this.skillRarity = this.skillRarity;
+            this.skillData = skillData;
+            this.skillRarity = skillRarity;
             this.skillEffectStatValue = skillEffectStatValue;
         }
     }

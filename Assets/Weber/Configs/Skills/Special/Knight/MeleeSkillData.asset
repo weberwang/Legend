@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8973b785474dec98bfa65abe70e8a3, type: 3}
+  m_Name: MeleeSkillData
+  m_EditorClassIdentifier: 
+  ID:
+    m_SerializedID:
+      m_String: fcbc820d-b74a-4251-aef0-7ed207a2e785
+  classType: 0
+  maxLevel: 10
+  skillName: "\u65A9\u51FB"
+  description: 
+  icon: {fileID: 0}
+  stats:
+  - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+    value: 2
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
+    value: 100
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
+    value: 1
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 5b6752d68e2ace64e961f83d13849d9c, type: 2}
+    value: 0
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 02a20f1b89d7d1e4392fda044bc48e5a, type: 2}
+    value: 0
+    changeValueType: 1
+  countDown:
+    cooldown: 2
+    duration: 0
+    interval: 0
+    amount: -1
+  skillType: 3
+  weaponAsset: {fileID: 11400000, guid: 0a182778282075b4e87fd1496a07c97f, type: 2}
+  battlePropPrefab: {fileID: 6874103210758440334, guid: a082927d3e093ff45a47bf55b5b0c647,
+    type: 3}
+  skillHitEffects: []

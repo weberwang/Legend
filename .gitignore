@@ -221,3 +221,4 @@ Packages/com.singularitygroup.hotreload*
 Packages/com.arongranberg.astar*
 SceneBackups/
 !Assets/Addressable*
+Legend_BurstDebugInformation_DoNotShip/

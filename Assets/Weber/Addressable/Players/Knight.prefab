@@ -1865,7 +1865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e4aa7a58d404413af1c9111cdcd3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsPlayer: 0
+  m_IsPlayer: 1
   m_Time:
     m_UpdateTime: 0
   m_Kernel:
@@ -1874,9 +1874,7 @@ MonoBehaviour:
     m_RigLayers:
       m_Rigs: []
   m_Footsteps:
-    m_Feet:
-    - rid: 5668441467303231489
-    - rid: 5668441467303231490
+    m_Feet: []
     m_FootstepSounds:
       m_SoundsAsset: {fileID: 11400000, guid: cc9a58db4035e493199624217f60c661, type: 2}
   m_Ragdoll:
@@ -1893,29 +1891,11 @@ MonoBehaviour:
         m_Motion:
           rid: 5668441467303231493
         m_Driver:
-          rid: 5668441467303231494
+          rid: 5668441629414654602
         m_Facing:
           rid: 5668441467303231495
         m_Animim:
-          rid: 5668441467303231496
-    - rid: 5668441467303231489
-      type: {class: Footstep, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_Bone:
-          m_Type: 1
-          m_Human: 5
-          m_Path: 
-    - rid: 5668441467303231490
-      type: {class: Footstep, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_Bone:
-          m_Type: 1
-          m_Human: 6
-          m_Path: 
+          rid: 5668441626398687996
     - rid: 5668441467303231491
       type: {class: RagdollNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
@@ -1957,16 +1937,6 @@ MonoBehaviour:
           m_InSuccession: 0
           m_DashInAir: 0
           m_Cooldown: 1
-    - rid: 5668441467303231494
-      type: {class: UnitDriverController, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_SkinWidth: 0.08
-        m_PushForce: 1
-        m_MaxSlope: 45
-        m_StepHeight: 0.3
-        m_Axonometry:
-          m_Axonometry:
-            rid: 5668441467303231499
     - rid: 5668441467303231495
       type: {class: UnitFacingPivot, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data:
@@ -1974,17 +1944,6 @@ MonoBehaviour:
         m_Axonometry:
           m_Axonometry:
             rid: 5668441467303231500
-    - rid: 5668441467303231496
-      type: {class: UnitAnimimKinematic, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Position: {x: 0, y: 0, z: 0}
-        m_Rotation: {x: 0, y: 0, z: 0}
-        m_Scale: {x: 1, y: 1, z: 1}
-        m_SmoothTime: 0.2
-        m_Mannequin: {fileID: 8112765943161726209}
-        m_Animator: {fileID: 935256125834454331}
-        m_StartState: {fileID: 11400000, guid: 2aba64ae3a02b004ea1cc20a3a66cbc2, type: 2}
-        m_Reaction: {fileID: 0}
     - rid: 5668441467303231497
       type: {class: InputValueVector2MotionPrimary, ns: GameCreator.Runtime.Common,
         asm: GameCreator.Runtime.Core}
@@ -1994,10 +1953,31 @@ MonoBehaviour:
         asm: GameCreator.Runtime.Core}
       data:
         m_Offset: {x: 0, y: 0, z: 1}
-    - rid: 5668441467303231499
+    - rid: 5668441467303231500
       type: {class: AxonometryNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
-    - rid: 5668441467303231500
+    - rid: 5668441626398687996
+      type: {class: UnitAnimimKinematic, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
+      data:
+        m_Position: {x: 0, y: 0, z: 0}
+        m_Rotation: {x: 0, y: 0, z: 0}
+        m_Scale: {x: 1, y: 1, z: 1}
+        m_SmoothTime: 0.5
+        m_Mannequin: {fileID: 8112765943161726209}
+        m_Animator: {fileID: 935256125834454331}
+        m_StartState: {fileID: 11400000, guid: 2aba64ae3a02b004ea1cc20a3a66cbc2, type: 2}
+        m_Reaction: {fileID: 0}
+    - rid: 5668441629414654602
+      type: {class: UnitDriverTopDown, ns: Weber.Scripts.Common.Extra, asm: Assembly-CSharp}
+      data:
+        m_SkinWidth: 0.08
+        m_PushForce: 1
+        m_MaxSlope: 45
+        m_StepHeight: 0.3
+        m_Axonometry:
+          m_Axonometry:
+            rid: 5668441629414654603
+    - rid: 5668441629414654603
       type: {class: AxonometryNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
 --- !u!114 &3767397507409206557
@@ -2012,10 +1992,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44174b17c9d04c12bca1b3bbd569b4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id:
+    m_SerializedID:
+      m_String: 6b70f743-768b-4638-acd7-a496b5c55651
   _deathLayer:
     serializedVersion: 2
     m_Bits: 0
-  _skillManager: {fileID: 0}
+  _skillManager: {fileID: 6875256263279085305}
   _hitClip: {fileID: 0}
   _deathClip: {fileID: 0}
 --- !u!114 &6875256263279085305
@@ -2031,7 +2014,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initSkillData: {fileID: 11400000, guid: 0f7f7176bde753a49b0a67c4dcd8ce47, type: 2}
-  _skillDatas: []
+  _specialAttackSkillDatas: []
+  _commonSkillDatas: []
+  _baseSkillDatas:
+  - {fileID: 11400000, guid: 8ab959d8aadc359468d392d429e1f3f9, type: 2}
 --- !u!114 &3908093639801720990
 MonoBehaviour:
   m_ObjectHideFlags: 0

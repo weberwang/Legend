@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3115f9f79e5e8c49933e4d8ae80a70c, type: 3}
+  m_Name: AllHeroData
+  m_EditorClassIdentifier: 
+  heroDatas:
+  - ID:
+      m_SerializedID:
+        m_String: 6b70f743-768b-4638-acd7-a496b5c55651
+    heroName: Knight
+    icon: {fileID: 0}
+    description: 
+    skillValues:
+    - stat: {fileID: 11400000, guid: c4ba38a16342f5d438f30d32b8c309f0, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 5b6752d68e2ace64e961f83d13849d9c, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 02a20f1b89d7d1e4392fda044bc48e5a, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: f55236c3e2ee06343b9ce54c818c7338, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 029af27b46b01d448a42d30956de691a, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 89675af48f19b3440bab974c7570d4a7, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: b6021fc4b181aed4aad9e3384a940d45, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 87284fdd842f41a46aa1f86adfe54db7, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
+      value: 0
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
+      value: 0
+      changeValueType: 0

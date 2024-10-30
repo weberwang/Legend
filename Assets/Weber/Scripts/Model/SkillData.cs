@@ -22,30 +22,30 @@ namespace Weber.Scripts.Model
         public Sprite icon;
         public SkillEffectStatValue[] stats;
 
-        [field: NonSerialized] public bool Learned { get; private set; }
+        // [field: NonSerialized] public bool Learned { get; private set; }
         [field: NonSerialized] public int Level { get; private set; }
 
-        public virtual void Learn(CharacterUnit characterUnit, BaseSkillHitEffect baseSkillHitEffect = null)
-        {
-            if (Learned) return;
-            Learned = true;
-            Level = 1;
-        }
+        // public virtual void Learn(CharacterUnit characterUnit, BaseSkillHitEffect baseSkillHitEffect = null)
+        // {
+        //     if (Learned) return;
+        //     Learned = true;
+        //     Level = 1;
+        // }
 
-        public virtual bool Upgrade(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
+        public virtual bool Upgrade(CharacterUnit characterUnit, SkillEffectStatValue learnSkill = null, BaseSkillHitEffect skillHitEffect = null)
         {
-            if (!Learned) return false;
+            // if (!Learned) return false;
             if (Level < maxLevel)
             {
                 Level++;
-                UpdateSkill(characterUnit, learnSkill);
+                UpdateSkill(characterUnit, learnSkill, skillHitEffect);
                 return true;
             }
 
             return false;
         }
 
-        protected virtual void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
+        protected virtual void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill = null, BaseSkillHitEffect skillHitEffect = null)
         {
             characterUnit.UpdateStat(learnSkill);
         }

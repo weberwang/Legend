@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Common;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Weber.Scripts.Legend.Unit;
 using Weber.Scripts.Model;
@@ -16,6 +17,8 @@ namespace Weber.Scripts.Domain
         private const string HERO_LEARN_SKILL_CONFIG_PATH = "Assets/Weber/Addressable/Config/LearnSkillData.asset";
         private const string HERO_SKILL_LUCK_PATH = "Assets/Weber/Addressable/Config/LuckConfig.asset";
         private const string HERO_STAT_LEVEL_PATH = "Assets/Weber/Addressable/Config/StatLevelConfig.asset";
+
+        private const string HERO_PREFAB_PATH = "Assets/Weber/Addressable/Players/{0}.prefab";
         private const string SAVE_KEY = "HeroSKill";
         [field: NonSerialized] public HeroStatLevelValue HeroStatLevelValueConfig { get; private set; }
 
@@ -115,13 +118,20 @@ namespace Weber.Scripts.Domain
         {
             for (int i = 0; i < AllHeroData.heroDatas.Length; i++)
             {
-                if (AllHeroData.heroDatas[i].ID.Equals(heroId))
+                if (AllHeroData.heroDatas[i].ID.ToString() == heroId.ToString())
                 {
                     return AllHeroData.heroDatas[i];
                 }
             }
 
             return null;
+        }
+
+        public async UniTask<GameObject> LoadHeroPrefab(string heroName)
+        {
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(string.Format(HERO_PREFAB_PATH, heroName));
+            await asyncOperationHandle.Task;
+            return asyncOperationHandle.Result;
         }
 
         private void OnApplicationPause(bool pauseStatus)

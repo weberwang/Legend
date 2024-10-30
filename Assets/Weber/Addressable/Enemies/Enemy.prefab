@@ -1578,7 +1578,7 @@ GameObject:
   - component: {fileID: 8565520403201679120}
   - component: {fileID: 6536450616772510291}
   - component: {fileID: 8779637491638483556}
-  - component: {fileID: -1763217134200715524}
+  - component: {fileID: 7366335165345189467}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -1623,9 +1623,7 @@ MonoBehaviour:
     m_RigLayers:
       m_Rigs: []
   m_Footsteps:
-    m_Feet:
-    - rid: 5668441176550146446
-    - rid: 5668441176550146447
+    m_Feet: []
     m_FootstepSounds:
       m_SoundsAsset: {fileID: 11400000, guid: cc9a58db4035e493199624217f60c661, type: 2}
   m_Ragdoll:
@@ -1646,25 +1644,7 @@ MonoBehaviour:
         m_Facing:
           rid: 5668441176550146452
         m_Animim:
-          rid: 5668441176550146453
-    - rid: 5668441176550146446
-      type: {class: Footstep, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_Bone:
-          m_Type: 1
-          m_Human: 5
-          m_Path: 
-    - rid: 5668441176550146447
-      type: {class: Footstep, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_Bone:
-          m_Type: 1
-          m_Human: 6
-          m_Path: 
+          rid: 5668441626398687570
     - rid: 5668441176550146448
       type: {class: RagdollNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
@@ -1713,17 +1693,6 @@ MonoBehaviour:
         m_Axonometry:
           m_Axonometry:
             rid: 5668441176550146457
-    - rid: 5668441176550146453
-      type: {class: UnitAnimimKinematic, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data:
-        m_Position: {x: 0, y: 0, z: 0}
-        m_Rotation: {x: 0, y: 0, z: 0}
-        m_Scale: {x: 1, y: 1, z: 1}
-        m_SmoothTime: 0.5
-        m_Mannequin: {fileID: 3491688625406077839}
-        m_Animator: {fileID: 6954077623549475982}
-        m_StartState: {fileID: 0}
-        m_Reaction: {fileID: 0}
     - rid: 5668441176550146454
       type: {class: InputValueVector2MotionPrimary, ns: GameCreator.Runtime.Common,
         asm: GameCreator.Runtime.Core}
@@ -1739,13 +1708,6 @@ MonoBehaviour:
     - rid: 5668441215126471124
       type: {class: UnitDriverPathfinding, ns: Weber.Scripts.Common.Extra, asm: Assembly-CSharp}
       data:
-        m_SkinWidth: 0.08
-        m_PushForce: 1
-        m_MaxSlope: 45
-        m_StepHeight: 0.3
-        m_Axonometry:
-          m_Axonometry:
-            rid: 5668441215126471125
         m_CanMove: 1
         m_TrackType: 1
         m_Target:
@@ -1754,12 +1716,21 @@ MonoBehaviour:
         m_RandomRaduis: 3
         m_NearDistance: 2
         m_CheckPathInterval: 1
-    - rid: 5668441215126471125
-      type: {class: AxonometryNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
-      data: 
     - rid: 5668441215126471126
       type: {class: GetGameObjectPlayer, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}
       data: 
+    - rid: 5668441626398687570
+      type: {class: UnitAnimimGPU, ns: Weber.Scripts.Common.Extra, asm: Assembly-CSharp}
+      data:
+        m_Position: {x: 0, y: 0, z: 0}
+        m_Rotation: {x: 0, y: 0, z: 0}
+        m_Scale: {x: 1, y: 1, z: 1}
+        m_SmoothTime: 0.5
+        m_Mannequin: {fileID: 3491688625406077839}
+        m_Animator: {fileID: 6954077623549475982}
+        m_StartState: {fileID: 0}
+        m_Reaction: {fileID: 0}
+        _run: {fileID: 7400000, guid: b854bf3b9cef1df48b9be0640e3e2b60, type: 3}
 --- !u!114 &6536450616772510291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1876,13 +1847,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06328b99ece34784be7b7063d05701dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id:
+    m_SerializedID:
+      m_String: 02072874-b333-4676-9b79-4337b7a95481
   _deathLayer:
     serializedVersion: 2
-    m_Bits: 0
-  _skillManager: {fileID: 0}
+    m_Bits: 128
+  _skillManager: {fileID: 7366335165345189467}
   _hitClip: {fileID: 0}
   _deathClip: {fileID: 0}
---- !u!114 &-1763217134200715524
+--- !u!114 &7366335165345189467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1891,42 +1865,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3227872230208166158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ecd922218e245e2b85d51f9f08338c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1846e23e573a9964a85019773beaa841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Instructions:
-    m_Instructions:
-    - rid: 5668441241800671538
-  m_TriggerEvent:
-    rid: 5668441241800671507
-  references:
-    version: 2
-    RefIds:
-    - rid: 5668441241800671507
-      type: {class: EventShooterHit, ns: GameCreator.Runtime.Shooter, asm: GameCreator.Runtime.Shooter}
-      data: 
-    - rid: 5668441241800671538
-      type: {class: InstructionLogicCallMethod, ns: GameCreator.Runtime.VisualScripting,
-        asm: GameCreator.Runtime.Core}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_Method:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 8779637491638483556}
-              m_TargetAssemblyTypeName: Weber.Scripts.Legend.Unit.CharacterUnit,
-                Assembly-CSharp
-              m_MethodName: OnShootHit
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
+  _initSkillData: {fileID: 0}
+  _specialAttackSkillDatas: []
+  _commonSkillDatas: []
+  _baseSkillDatas: []
 --- !u!1 &3279117850756032092
 GameObject:
   m_ObjectHideFlags: 0

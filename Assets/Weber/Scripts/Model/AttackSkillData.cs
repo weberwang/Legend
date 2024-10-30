@@ -46,37 +46,46 @@ namespace Weber.Scripts.Model
         }
 
 
-        public override void Learn(CharacterUnit characterUnit, BaseSkillHitEffect baseSkillHitEffect = null)
-        {
-            base.Learn(characterUnit, baseSkillHitEffect);
-            CreateBattleProp(characterUnit);
-            if (baseSkillHitEffect != null)
-            {
-                for (int i = 0; i < _learnedSkillHitEffects.Count; i++)
-                {
-                    if (_learnedSkillHitEffects[i].hitEffectType == baseSkillHitEffect.hitEffectType) return;
-                }
-
-                _learnedSkillHitEffects.Add(baseSkillHitEffect);
-            }
-        }
+        // public override void Learn(CharacterUnit characterUnit, BaseSkillHitEffect baseSkillHitEffect = null)
+        // {
+        //     base.Learn(characterUnit, baseSkillHitEffect);
+        //     CreateBattleProp(characterUnit);
+        //     if (baseSkillHitEffect is not null)
+        //     {
+        //         for (int i = 0; i < _learnedSkillHitEffects.Count; i++)
+        //         {
+        //             if (_learnedSkillHitEffects[i].hitEffectType == baseSkillHitEffect.hitEffectType) return;
+        //         }
+        //
+        //         _learnedSkillHitEffects.Add(baseSkillHitEffect);
+        //     }
+        // }
 
         private void CreateBattleProp(CharacterUnit characterUnit)
         {
-            if (battlePropPrefab != null && _battleProp == null)
+            if (battlePropPrefab is not null && _battleProp is null)
             {
                 var propInstance = PoolManager.Instance.Pick(battlePropPrefab.gameObject, 1);
                 var prop = propInstance.Get<BattleProp>();
                 prop.SetUnitTarget(characterUnit, this);
-                characterUnit.AddBattleProp(prop);
                 _battleProp = prop;
             }
         }
 
-        protected override void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill)
+        protected override void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill = null, BaseSkillHitEffect skillHitEffect = null)
         {
             CreateBattleProp(characterUnit);
-            if (_battleProp != null) _battleProp.UpdateSkill(learnSkill);
+            if (skillHitEffect is not null)
+            {
+                for (int i = 0; i < _learnedSkillHitEffects.Count; i++)
+                {
+                    if (_learnedSkillHitEffects[i].hitEffectType == skillHitEffect.hitEffectType) return;
+                }
+
+                _learnedSkillHitEffects.Add(skillHitEffect);
+            }
+
+            _battleProp.UpdateSkill(learnSkill);
         }
     }
 

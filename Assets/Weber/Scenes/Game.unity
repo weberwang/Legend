@@ -163,8 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cb1bc535cc4ed5985e2909fc38a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroPrefab: {fileID: 3767397507409206557, guid: 3e8f0761b6c8f65448387f8dc66d29d9,
-    type: 3}
 --- !u!1 &499735341
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af511a4c6dd81ba478db11563a1d1d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prototypeList: []
+  prototypeList:
+  - {fileID: 11400000, guid: 149863a1ef3fbe94483d8deecc78aaad, type: 2}
   autoSelectCamera: 1
   cameraData:
     mainCamera: {fileID: 835060138}
@@ -206,7 +205,7 @@ MonoBehaviour:
   isOcclusionCulling: 0
   minCullingDistance: 0
   selectedPrototypeList:
-  - {fileID: 11400000, guid: 235da208f97a8974aa492dc459ee28cd, type: 2}
+  - {fileID: 11400000, guid: 149863a1ef3fbe94483d8deecc78aaad, type: 2}
   isPrototypeTextMode: 0
   showSceneSettingsBox: 1
   showPrototypeBox: 1
@@ -222,8 +221,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   lightProbeDisabled: 0
-  registeredPrefabs: []
-  prefabList: []
+  registeredPrefabs:
+  - prefabPrototype: {fileID: 11400000, guid: 149863a1ef3fbe94483d8deecc78aaad, type: 2}
+    registeredPrefabs: []
+  prefabList:
+  - {fileID: 1540857387673783191, guid: 19733e9f226cb484da2a78534abf28f5, type: 3}
   enableMROnManagerDisable: 1
   enableMROnRemoveInstance: 1
   animationEvents: []
