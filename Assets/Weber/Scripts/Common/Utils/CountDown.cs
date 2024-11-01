@@ -23,6 +23,8 @@ namespace Weber.Scripts.Common.Utils
 
         private bool _turnOn = false;
 
+        public float Progress => (float)(_cooldown / cooldown);
+
         public CountDown()
         {
         }

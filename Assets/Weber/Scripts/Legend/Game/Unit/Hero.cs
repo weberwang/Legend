@@ -2,8 +2,12 @@
 using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Stats;
 using UnityEngine;
+using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Domain;
+using Weber.Scripts.Legend.Game;
+using Weber.Scripts.Legend.Game.Items;
 using Weber.Scripts.Model;
+using Math = Unity.Physics.Math;
 
 namespace Weber.Scripts.Legend.Unit
 {
@@ -14,6 +18,8 @@ namespace Weber.Scripts.Legend.Unit
         protected override void OnCreate()
         {
             Character.IsPlayer = true;
+            _characterData = HeroManager.Instance.GetHeroData(ID);
+            Character.Motion.Radius = _characterData.radius;
             UpdateAttributes();
         }
 
@@ -29,18 +35,20 @@ namespace Weber.Scripts.Legend.Unit
             base.UpdateStat(skillEffectStatValue);
             switch (skillEffectStatValue.stat.ID.ToString())
             {
-                case Constants.TRAITS_PICK_DISTANCE:
-                    PickRadius = GetRuntimeStatDataValue(Constants.TRAITS_PICK_DISTANCE);
+                case TraitsID.TRAITS_PICK_DISTANCE:
+                    PickRadius = GetRuntimeStatValue(TraitsID.TRAITS_PICK_DISTANCE);
+                    break;
+                case TraitsID.TRAITS_MAX_HEALTH:
+                    GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH).Value += skillEffectStatValue.value;
                     break;
             }
         }
 
         private void UpdateAttributes()
         {
-            var heroData = HeroManager.Instance.GetHeroData(ID);
-            foreach (var skillEffectStatValue in heroData.skillValues)
+            foreach (var skillEffectStatValue in _characterData.skillValues)
             {
-                GetRuntimeStatData(skillEffectStatValue.stat.ID).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
+                GetRuntimeStatData(skillEffectStatValue.stat.ID.ToString()).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
             }
 
             //根据技能升级初始化属性
@@ -50,7 +58,8 @@ namespace Weber.Scripts.Legend.Unit
                 GetRuntimeStatData(instanceHeroSkillValue.Key).AddModifier(ModifierType.Constant, instanceHeroSkillValue.Value * levelValue.value);
             }
 
-            PickRadius = GetRuntimeStatDataValue(Constants.TRAITS_PICK_DISTANCE);
+            PickRadius = GetRuntimeStatValue(TraitsID.TRAITS_PICK_DISTANCE);
+            GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH).Value = GetRuntimeStatData(TraitsID.TRAITS_MAX_HEALTH).Value;
         }
 
         private void UpgradeLevel()
@@ -60,10 +69,11 @@ namespace Weber.Scripts.Legend.Unit
 
         public void AddExp(int xp)
         {
-            var xpGain = GetRuntimeStatDataValue(Constants.TRAITS_XP_GAIN);
-            var xpData = GetRuntimeStatData(Constants.TRAITS_XP);
-            xpData.AddModifier(ModifierType.Constant, (1 + xpGain) * xp);
+            var xpGain = GetRuntimeStatValue(TraitsID.TRAITS_XP_GAIN);
+            var xpData = GetRunTimeAttributeData(TraitsID.TRAITS_XP);
+            xpData.Value += ((1 + xpGain) * xp);
             //todo 检测是否升级,播放升级特效，弹出升级面板
+            Signals.Emit(new SignalArgs(SignalNames.OnPickXP, gameObject));
         }
     }
 }

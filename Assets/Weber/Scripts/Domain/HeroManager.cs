@@ -18,7 +18,7 @@ namespace Weber.Scripts.Domain
         private const string HERO_SKILL_LUCK_PATH = "Assets/Weber/Addressable/Config/LuckConfig.asset";
         private const string HERO_STAT_LEVEL_PATH = "Assets/Weber/Addressable/Config/StatLevelConfig.asset";
 
-        private const string HERO_PREFAB_PATH = "Assets/Weber/Addressable/Players/{0}.prefab";
+        private const string HERO_PREFAB_PATH = "Assets/Weber/Addressable/Prefabs/Characters/Players/{0}.prefab";
         private const string SAVE_KEY = "HeroSKill";
         [field: NonSerialized] public HeroStatLevelValue HeroStatLevelValueConfig { get; private set; }
 
@@ -114,11 +114,11 @@ namespace Weber.Scripts.Domain
             }
         }
 
-        public HeroData GetHeroData(UniqueID heroId)
+        public HeroData GetHeroData(int heroId)
         {
             for (int i = 0; i < AllHeroData.heroDatas.Length; i++)
             {
-                if (AllHeroData.heroDatas[i].ID.ToString() == heroId.ToString())
+                if (AllHeroData.heroDatas[i].id == heroId)
                 {
                     return AllHeroData.heroDatas[i];
                 }

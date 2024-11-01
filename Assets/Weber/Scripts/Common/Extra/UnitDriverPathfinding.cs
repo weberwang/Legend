@@ -71,7 +71,7 @@ namespace Weber.Scripts.Common.Extra
         protected override void UpdateTranslation(IUnitMotion motion)
         {
             if (_targetObject is null) return;
-            // AIMove();
+            AIMove();
             if (Vector3.Distance(Transform.position, _targetObject.transform.position) < m_NearDistance)
             {
                 _offsetRadius = 0;

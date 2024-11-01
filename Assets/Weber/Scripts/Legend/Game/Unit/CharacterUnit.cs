@@ -7,6 +7,7 @@ using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Shooter;
 using GameCreator.Runtime.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Legend.Skill;
@@ -19,17 +20,14 @@ namespace Weber.Scripts.Legend.Unit
     [RequireComponent(typeof(Character))]
     public class CharacterUnit : MonoBehaviour, ISignalReceiver
     {
-        [SerializeField] private UniqueID _id = new UniqueID(UniqueID.GenerateID());
         [SerializeField] private LayerMask _deathLayer;
         [SerializeField] private SkillManager _skillManager;
 
-        [SerializeField] private AnimationClip _hitClip;
-        [SerializeField] private AnimationClip _deathClip;
         public Character Character { get; private set; }
 
-        protected Transform _transform;
+        protected Transform Transform;
 
-        public UniqueID ID => _id;
+        public int ID { get; private set; }
 
         protected Traits traits;
         public RuntimeAttributeData HealthAttributes { get; private set; }
@@ -38,16 +36,19 @@ namespace Weber.Scripts.Legend.Unit
 
         private List<BaseSkillHitEffect> _skillHitEffects = new List<BaseSkillHitEffect>();
 
+        protected CharacterData _characterData;
+        public CharacterData CharacterData => _characterData;
+
         public float Health => (float)HealthAttributes.Value;
+        public UnityAction<CharacterUnit> OnDeath;
 
         private void Awake()
         {
-            _transform = transform;
+            Transform = transform;
             Character = GetComponent<Character>();
             traits = GetComponent<Traits>();
-            HealthAttributes = traits.RuntimeAttributes.Get(Constants.TRAITS_HEALTH);
+            HealthAttributes = GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH);
             OnCreate();
-
             Signals.Subscribe(this, SignalNames.OnSpellHit);
         }
 
@@ -118,10 +119,9 @@ namespace Weber.Scripts.Legend.Unit
             }
         }
 
-        public void OnHurt(float damage, bool ignoreArmor = false)
+        private void OnHurt(float damage, bool ignoreArmor = false)
         {
-            Debug.Log("OnHurt:" + damage);
-            var armor = ignoreArmor ? 0 : GetRuntimeStatDataValue(Constants.TRAITS_ARMOR);
+            var armor = ignoreArmor ? 0 : GetRuntimeStatValue(TraitsID.TRAITS_ARMOR);
             var realDamage = Mathf.FloorToInt(damage - armor);
             HealthAttributes.Value -= realDamage;
             if (HealthAttributes.Value <= 0)
@@ -136,9 +136,10 @@ namespace Weber.Scripts.Legend.Unit
 
         public void OnSkillHit(BattleProp battleProp)
         {
-            var damage = battleProp.GetRuntimeStatDataValue(Constants.TRAITS_DAMAGE) * Random.Range(0.9f, 1.1f);
-            var critical = battleProp.GetRuntimeStatDataValue(Constants.TRAITS_CRITICAL);
-            var criticalDamage = battleProp.GetRuntimeStatDataValue(Constants.TRAITS_CRITICAL_DAMAGE);
+            if (Character.IsDead) return;
+            var damage = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_DAMAGE) * Random.Range(0.9f, 1.1f);
+            var critical = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_CRITICAL);
+            var criticalDamage = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_CRITICAL_DAMAGE);
             if (Random.value < critical)
             {
                 damage *= (1 + criticalDamage);
@@ -153,21 +154,23 @@ namespace Weber.Scripts.Legend.Unit
 
         protected virtual async void Death()
         {
+            if (Character.IsDead) return;
             Character.IsDead = true;
+            OnDeath?.Invoke(this);
             for (int i = 0; i < _battleProps.Count; i++)
             {
-                Destroy(_battleProps[i].gameObject);
+                _battleProps[i].gameObject.SetActive(false);
             }
 
             _battleProps.Clear();
-            await PlayGesture(_deathClip);
+            await PlayGesture(_characterData.death);
             gameObject.SetActive(false);
         }
 
         private async void Hit()
         {
             //todo 显示伤害效果
-            await PlayGesture(_hitClip);
+            await PlayGesture(_characterData.hurt);
         }
 
         private void EffectWithSkill(BattleProp battleProp)
@@ -205,17 +208,22 @@ namespace Weber.Scripts.Legend.Unit
                 _battleProps[i].UpdateSkill(skillEffectStatValue);
             }
 
-            if (skillEffectStatValue.stat.ID.String == Constants.TRAITS_PICK_DISTANCE)
+            if (skillEffectStatValue.stat.ID.String == TraitsID.TRAITS_PICK_DISTANCE)
             {
-                GetRuntimeStatData(skillEffectStatValue.stat.ID).AddModifier(ModifierType.Percent, skillEffectStatValue.value);
+                GetRuntimeStatData(skillEffectStatValue.stat.ID.ToString()).AddModifier(ModifierType.Percent, skillEffectStatValue.value);
             }
             else
             {
-                GetRuntimeStatData(skillEffectStatValue.stat.ID).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
+                GetRuntimeStatData(skillEffectStatValue.stat.ID.ToString()).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
             }
         }
 
-        public double GetAttribute(string attributeID)
+        public virtual void UpdateStat(string statID, float value, ModifierType modifierType)
+        {
+            GetRuntimeStatData(statID).AddModifier(modifierType, value);
+        }
+
+        public double GetRunTimeAttributeValue(string attributeID)
         {
             var attribute = traits.RuntimeAttributes.Get(attributeID);
             if (attribute is not null)
@@ -226,7 +234,12 @@ namespace Weber.Scripts.Legend.Unit
             return 0;
         }
 
-        public float GetRuntimeStatDataValue(string statID)
+        public RuntimeAttributeData GetRunTimeAttributeData(string attributeID)
+        {
+            return traits.RuntimeAttributes.Get(attributeID);
+        }
+
+        public float GetRuntimeStatValue(string statID)
         {
             var stat = traits.RuntimeStats.Get(statID);
             if (stat is not null)
@@ -237,11 +250,6 @@ namespace Weber.Scripts.Legend.Unit
             return 0;
         }
 
-        public RuntimeStatData GetRuntimeStatData(IdString statID)
-        {
-            return traits.RuntimeStats.Get(statID);
-        }
-
         public RuntimeStatData GetRuntimeStatData(string statID)
         {
             return traits.RuntimeStats.Get(statID);
@@ -250,6 +258,7 @@ namespace Weber.Scripts.Legend.Unit
         public void AddBattleProp(BattleProp battleProp)
         {
             _battleProps.Add(battleProp);
+            Signals.Emit(new SignalArgs(SignalNames.OnSkillLearned, battleProp.gameObject));
         }
 
         public BattleProp GetBattleProp(UniqueID skillID)
@@ -282,6 +291,13 @@ namespace Weber.Scripts.Legend.Unit
         public void LearnSkill(string skillID, SkillEffectStatValue skillEffectStatValue)
         {
             _skillManager.LearnSkill(skillID, skillEffectStatValue);
+        }
+
+        public void ResetSelf(int id)
+        {
+            ID = id;
+            Character.IsDead = false;
+            OnCreate();
         }
     }
 }

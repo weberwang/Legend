@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: AllHeroData
   m_EditorClassIdentifier: 
   heroDatas:
-  - ID:
-      m_SerializedID:
-        m_String: 6b70f743-768b-4638-acd7-a496b5c55651
-    heroName: Knight
+  - id: 0
+    name: "\u9A91\u58EB"
     icon: {fileID: 0}
     description: 
     skillValues:
@@ -42,7 +40,7 @@ MonoBehaviour:
       value: 0
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 89675af48f19b3440bab974c7570d4a7, type: 2}
-      value: 0
+      value: 100
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
       value: 0
@@ -59,3 +57,8 @@ MonoBehaviour:
     - stat: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
       value: 0
       changeValueType: 0
+    radius: 0.5
+    idle: {fileID: 0}
+    run: {fileID: 0}
+    hurt: {fileID: 0}
+    death: {fileID: 0}

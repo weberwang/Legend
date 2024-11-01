@@ -1,10 +1,8 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Melee;
 using GameCreator.Runtime.Shooter;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Weber.Scripts.Legend.Unit;
 using Weber.Scripts.Model;
 

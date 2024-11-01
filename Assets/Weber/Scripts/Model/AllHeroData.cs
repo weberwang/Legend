@@ -13,12 +13,7 @@ namespace Weber.Scripts.Model
     }
 
     [Serializable]
-    public class HeroData
+    public class HeroData : CharacterData
     {
-        public UniqueID ID = new UniqueID(UniqueID.GenerateID());
-        public string heroName;
-        public Sprite icon;
-        [TextArea] public string description;
-        public SkillEffectStatValue[] skillValues;
     }
 }

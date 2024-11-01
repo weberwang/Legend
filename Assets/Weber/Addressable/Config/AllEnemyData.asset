@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b61813933e04a1591eb3d1fdd7dcb0c, type: 3}
+  m_Name: AllEnemyData
+  m_EditorClassIdentifier: 
+  enemyDatas:
+  - id: 0
+    name: 
+    icon: {fileID: 0}
+    description: 
+    skillValues: []
+    idle: {fileID: 0}
+    run: {fileID: 7400000, guid: 1fa2d8a8bdc120c41b963acfcf916acd, type: 3}
+    hurt: {fileID: 0}
+    death: {fileID: 0}
+    type: 0

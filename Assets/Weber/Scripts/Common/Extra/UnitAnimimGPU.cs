@@ -4,6 +4,7 @@ using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
 using GPUInstancer.CrowdAnimations;
 using UnityEngine;
+using Weber.Scripts.Legend.Unit;
 
 namespace Weber.Scripts.Common.Extra
 {
@@ -14,7 +15,7 @@ namespace Weber.Scripts.Common.Extra
     [Serializable]
     public class UnitAnimimGPU : TUnitAnimim
     {
-        [SerializeField] private AnimationClip _run;
+        private AnimationClip _run;
         // private const float SMOOTH_PIVOT = 0.01f;
         // private const float SMOOTH_GROUNDED = 0.2f;
         // private const float SMOOTH_STAND = 0.1f;
@@ -59,20 +60,28 @@ namespace Weber.Scripts.Common.Extra
         // }
 
         private GPUICrowdPrefab _crowdInstance;
+        private CharacterUnit _characterUnit;
 
         public override void OnStartup(Character character)
         {
             base.OnStartup(character);
+            _characterUnit = character.Get<CharacterUnit>();
             _crowdInstance = character.GetComponentInChildren<GPUICrowdPrefab>();
         }
 
         public override void OnUpdate()
         {
-            base.OnUpdate();
+            // base.OnUpdate();
             if (_crowdInstance is null)
             {
                 _crowdInstance = Character.GetComponentInChildren<GPUICrowdPrefab>();
                 return;
+            }
+
+            if (_run == null)
+            {
+                _run = _characterUnit.CharacterData.run;
+                // _run
             }
 
             // if (_crowdInstance.animatorRef is null) return;

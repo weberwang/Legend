@@ -21,13 +21,13 @@ namespace Weber.Scripts.Domain
         {
         }
 
-        public async UniTask EndGame(int level)
+        public async UniTask StartGame(int level)
         {
             Level = level;
             var asyncOperationHandle = Addressables.LoadAssetAsync<EnemySpawnConfig>(string.Format(LEVEL_CONFIG, Level));
             await asyncOperationHandle.Task;
             var config = asyncOperationHandle.Result;
-            EnemyFactory.Instance.StartGame(config);
+            await EnemyFactory.Instance.StartGame(config);
         }
     }
 }

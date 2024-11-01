@@ -26,8 +26,8 @@ namespace Weber.Scripts.Legend.Skill
         protected Vector3 _offset;
 
         [SerializeField] private bool update = true;
-        public CharacterUnit CharacterUnit { get; private set; }
-        public AttackSkillData SkillData { get; private set; }
+        [field: NonSerialized] public CharacterUnit CharacterUnit { get; private set; }
+        [field: NonSerialized] public AttackSkillData SkillData { get; private set; }
 
 
         private Transform _transform;
@@ -35,7 +35,7 @@ namespace Weber.Scripts.Legend.Skill
 
         private Traits _traits;
 
-        protected CountDown _countDown;
+        [field: NonSerialized] public CountDown CountDown { get; private set; }
 
         // private RuntimeStatData _cooldownStats;
 
@@ -50,7 +50,6 @@ namespace Weber.Scripts.Legend.Skill
         public virtual void SetUnitTarget(CharacterUnit characterUnit, SkillData skillData)
         {
             CharacterUnit = characterUnit;
-            CharacterUnit.AddBattleProp(this);
             SkillData = skillData as AttackSkillData;
             _targetTransform = CharacterUnit.transform;
             switch (_bindType)
@@ -74,13 +73,13 @@ namespace Weber.Scripts.Legend.Skill
                 var statID = skillData.stats[i].stat.ID.String;
                 var stat = GetRuntimeStatData(statID);
                 stat.Base = skillData.stats[i].value;
-                stat.AddModifier(ModifierType.Constant, CharacterUnit.GetRuntimeStatDataValue(statID));
-                Debug.Log("statID:" + statID + "  value:" + GetRuntimeStatDataValue(statID));
+                stat.AddModifier(ModifierType.Constant, CharacterUnit.GetRuntimeStatValue(statID));
             }
 
-            _countDown = SkillData.countDown.Clone();
-            _countDown.UpdateCooldown(GetRuntimeStatDataValue(Constants.TRAITS_COOLDOWN));
-            _countDown.Start();
+            CountDown = SkillData.countDown.Clone();
+            CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
+            CountDown.Start();
+            CharacterUnit.AddBattleProp(this);
         }
 
         private void Update()
@@ -111,14 +110,17 @@ namespace Weber.Scripts.Legend.Skill
 
         protected virtual void OnUpdate()
         {
-            if (_countDown.OnUpdate())
+            if (CountDown != null)
             {
-                OnActive();
-            }
+                if (CountDown.OnUpdate())
+                {
+                    OnActive();
+                }
 
-            if (_countDown.Ended)
-            {
-                OnDeactive();
+                if (CountDown.Ended)
+                {
+                    OnDeactive();
+                }
             }
         }
 
@@ -172,9 +174,9 @@ namespace Weber.Scripts.Legend.Skill
             }
 
             runtimeAttributeData.AddModifier(learnSkill.changeValueType, learnSkill.value);
-            if (learnSkill.stat.ID.String == Constants.TRAITS_COOLDOWN)
+            if (learnSkill.stat.ID.String == TraitsID.TRAITS_COOLDOWN)
             {
-                _countDown.UpdateCooldown(GetRuntimeStatDataValue(Constants.TRAITS_COOLDOWN));
+                CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
             }
         }
 

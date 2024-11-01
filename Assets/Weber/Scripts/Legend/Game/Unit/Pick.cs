@@ -2,6 +2,7 @@
 using GameCreator.Runtime.Common;
 using UnityEngine;
 using Weber.Scripts.Legend.Game;
+using Weber.Scripts.Legend.Game.Items;
 
 namespace Weber.Scripts.Legend.Unit
 {

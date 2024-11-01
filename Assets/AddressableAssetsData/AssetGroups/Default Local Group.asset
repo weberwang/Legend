@@ -21,7 +21,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 19733e9f226cb484da2a78534abf28f5
-    m_Address: Assets/Weber/Addressable/Enemies/Enemy_0.prefab
+    m_Address: Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy_0.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -36,17 +36,22 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e8f0761b6c8f65448387f8dc66d29d9
-    m_Address: Assets/Weber/Addressable/Players/Knight.prefab
+    m_Address: Assets/Weber/Addressable/Prefabs/Characters/Players/Knight.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9851b14adfd4763459022206108616fb
-    m_Address: Assets/Weber/Addressable/Enemies/Enemy.prefab
+    m_Address: Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: baffdb275f99ca246ab34f93a8803741
     m_Address: Assets/Weber/Addressable/Config/LuckConfig.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd323d769b6df1d4da63e501555a9ae2
+    m_Address: Assets/Weber/Addressable/Config/AllEnemyData.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

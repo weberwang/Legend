@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using GameCreator.Runtime.Common;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Skill;
 using Weber.Scripts.Model;
+using Math = Unity.Physics.Math;
 using Random = UnityEngine.Random;
 
 namespace Weber.Scripts.Legend.Unit
@@ -125,7 +127,7 @@ namespace Weber.Scripts.Legend.Unit
         public UpgradeSkillData[] ChoiceSkillDatas()
         {
             SkillData[] skillDatas = null;
-            var level = _characterUnit.GetAttribute(Constants.TRAITS_LEVEL);
+            var level = _characterUnit.GetRunTimeAttributeValue(TraitsID.TRAITS_LEVEL);
             var learnSkillData = HeroManager.Instance.LearnSkillData;
 
             if (Array.IndexOf(learnSkillData.specialSkillLevel, level) >= 0)
@@ -160,7 +162,7 @@ namespace Weber.Scripts.Legend.Unit
                 }
 
                 var skillEffectStatValue = skillData.ChoiceSkillEffectStatValue().Clone();
-                var skillRarity = GetSkillRarityByLuck(_characterUnit.GetRuntimeStatDataValue(Constants.TRAITS_LUCK));
+                var skillRarity = GetSkillRarityByLuck(_characterUnit.GetRuntimeStatValue(TraitsID.TRAITS_LUCK));
                 var found = false;
                 foreach (var statLevel in statLevels)
                 {

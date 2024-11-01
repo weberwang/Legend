@@ -10,17 +10,9 @@ namespace Weber.Scripts.Model
     }
 
     [Serializable]
-    public class EnemyData
+    public class EnemyData:CharacterData
     {
-        public int id;
-        public string name;
-        public Sprite icon;
-        public string description;
         public EnemyType type;
-        public int health;
-        public int armor;
-        public int damage;
-        public int exp;
     }
 
     [Serializable]

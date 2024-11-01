@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Legend.Game;
+using Weber.Scripts.Legend.Game.Items;
 using Weber.Scripts.Legend.Unit;
 using Weber.Scripts.Model;
 using Random = UnityEngine.Random;
@@ -18,12 +19,13 @@ namespace Weber.Scripts.Domain
 
         public List<CharacterUnit> Enemies => m_Enemies;
 
-        private const string ENEMY_PATH = "Assets/Weber/Addressable/Enemies/Enemy.prefab";
-        private const string ENEMY_MODEL_PATH = "Assets/Weber/Addressable/Enemies/Enemy_{0}.prefab";
+        private const string ENEMY_PATH = "Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy.prefab";
+        private const string ENEMY_MODEL_PATH = "Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy_{0}.prefab";
         private const string ENEMY_SPAWN_PATH = "Assets/Weber/Addressable/Config/EnemySpawnConfig.asset";
+        private const string ALL_ENEMY_PATH = "Assets/Weber/Addressable/Config/AllEnemyData.asset";
 
         private GameObject _enemyPrefab;
-
+        private AllEnemyData _allEnemyData;
 
         private Camera _mainCamera;
         private readonly int _spawnDistance = 2;
@@ -31,9 +33,6 @@ namespace Weber.Scripts.Domain
         private readonly float _minDistanceFromPlayer = 3f;
         private int _groundMask;
         private RaycastHit[] _hits = new RaycastHit[1];
-
-        private bool _isGameStarted;
-        private float _startTime;
 
         private EnemySpawnConfig _currentEnemySpawnConfig;
 
@@ -43,15 +42,18 @@ namespace Weber.Scripts.Domain
         //所有掉落物品
         private List<DropItem> _dropItems = new List<DropItem>();
 
+        public int EnemyKillCount { get; private set; }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void RuntimeInitialize()
         {
             Instance.WakeUp();
         }
 
-        public async void StartGame(EnemySpawnConfig enemySpawnConfig)
+        public async UniTask StartGame(EnemySpawnConfig enemySpawnConfig)
         {
-            _startTime = 0;
+            EnemyKillCount = 0;
+            m_Enemies.Clear();
             _currentEnemySpawnConfig = enemySpawnConfig;
             List<int> _loadeds = new List<int>();
             for (int i = 0; i < _currentEnemySpawnConfig.spawnWaves.Count; i++)
@@ -63,24 +65,16 @@ namespace Weber.Scripts.Domain
 
                 await LoadEnemyModel(_currentEnemySpawnConfig.spawnWaves[i].enemyID);
             }
-
-            while (ShortcutPlayer.Instance is null)
-            {
-                await UniTask.Yield();
-            }
-
-            _isGameStarted = true;
         }
 
         private void Update()
         {
-            if (!_isGameStarted) return;
-            _startTime += Time.deltaTime;
+            if (Game.Instance.GameState != GameState.Playing) return;
             //根据_currentEnemySpawnConfig配置生成敌人
             for (int i = 0; i < _currentEnemySpawnConfig.spawnWaves.Count; i++)
             {
                 var wave = _currentEnemySpawnConfig.spawnWaves[i];
-                if (_startTime >= wave.startTime && _startTime <= wave.endTime)
+                if (Game.Instance.GameTime >= wave.startTime && Game.Instance.GameTime <= wave.endTime)
                 {
                     if (_spawnTime.ContainsKey(wave.enemyID))
                     {
@@ -103,6 +97,7 @@ namespace Weber.Scripts.Domain
         protected override void OnCreate()
         {
             LoadEnemy();
+            LoadEnemyConfig();
             _groundMask = LayerMask.GetMask("Ground");
             _mainCamera = Camera.main;
         }
@@ -112,6 +107,13 @@ namespace Weber.Scripts.Domain
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(ENEMY_PATH);
             await asyncOperationHandle.Task;
             _enemyPrefab = asyncOperationHandle.Result;
+        }
+
+        private async void LoadEnemyConfig()
+        {
+            var asyncOperationHandle = Addressables.LoadAssetAsync<AllEnemyData>(ALL_ENEMY_PATH);
+            await asyncOperationHandle.Task;
+            _allEnemyData = asyncOperationHandle.Result;
         }
 
         private async UniTask LoadEnemyModel(int enemyID)
@@ -145,14 +147,19 @@ namespace Weber.Scripts.Domain
             var enemyInstance = PoolManager.Instance.Pick(_enemyPrefab, targetPosition, Quaternion.identity, 1);
             var enemy = enemyInstance.Get<Enemy>();
             enemy.Character.ChangeModel(model, new Character.ChangeOptions());
+            enemy.ResetSelf(enemyID);
             enemy.OnDeath += OnEnemyDeath;
             m_Enemies.Add(enemy);
             return enemy;
         }
 
-        private void OnEnemyDeath(EnemyData enemyData)
+        private void OnEnemyDeath(CharacterUnit characterUnit)
         {
             //todo 生成掉落物品
+            EnemyKillCount++;
+            Enemy enemy = characterUnit as Enemy;
+            enemy.OnDeath -= OnEnemyDeath;
+            Signals.Emit(new SignalArgs(SignalNames.OnEnemyDeath, enemy.gameObject));
         }
 
         private bool SpawnEnemyOffScreen(out Vector3 position)
@@ -294,6 +301,19 @@ namespace Weber.Scripts.Domain
             }
 
             return lowestHealthEnemy;
+        }
+
+        public EnemyData GetEnemyData(int id)
+        {
+            for (int i = 0; i < _allEnemyData.enemyDatas.Length; i++)
+            {
+                if (_allEnemyData.enemyDatas[i].id == id)
+                {
+                    return _allEnemyData.enemyDatas[i];
+                }
+            }
+
+            return null;
         }
     }
 }
