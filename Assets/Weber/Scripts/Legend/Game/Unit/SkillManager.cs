@@ -127,7 +127,7 @@ namespace Weber.Scripts.Legend.Unit
         public UpgradeSkillData[] ChoiceSkillDatas()
         {
             SkillData[] skillDatas = null;
-            var level = _characterUnit.GetRunTimeAttributeValue(TraitsID.TRAITS_LEVEL);
+            var level = Convert.ToInt32(_characterUnit.GetRuntimeStatValue(TraitsID.TRAITS_LEVEL));
             var learnSkillData = HeroManager.Instance.LearnSkillData;
 
             if (Array.IndexOf(learnSkillData.specialSkillLevel, level) >= 0)
@@ -155,7 +155,8 @@ namespace Weber.Scripts.Legend.Unit
             for (int i = 0; i < skillDatas.Length; i++)
             {
                 var skillData = skillDatas[i];
-                if (skillData.Level <= 0)
+                //第一次学习该技能
+                if (skillData.Level == 0)
                 {
                     upgradeSkillDatas.Add(new UpgradeSkillData(skillData, LuckConfig.SkillRarity.Common, null));
                     continue;
@@ -166,7 +167,7 @@ namespace Weber.Scripts.Legend.Unit
                 var found = false;
                 foreach (var statLevel in statLevels)
                 {
-                    if (statLevel.stat.ID.Equals(skillEffectStatValue.stat.ID))
+                    if (statLevel.stat.ID.String == skillEffectStatValue.stat.ID.String)
                     {
                         foreach (var statLevelRarityValue in statLevel.rarityValues)
                         {
@@ -198,12 +199,12 @@ namespace Weber.Scripts.Legend.Unit
                 throw new ArgumentException("maxSelection cannot be greater than array length.");
 
             // 随机生成一个数量，范围从 1 到 maxSelection
-            int selectionCount = Random.Range(1, maxSelection + 1);
+            // int selectionCount = Random.Range(1, maxSelection + 1);
 
             // 使用 List 记录选择的索引，避免重复选择
             List<int> selectedIndices = new List<int>();
 
-            while (selectedIndices.Count < selectionCount)
+            while (selectedIndices.Count < maxSelection)
             {
                 int randomIndex = Random.Range(0, array.Length);
                 if (!selectedIndices.Contains(randomIndex))
@@ -223,8 +224,8 @@ namespace Weber.Scripts.Legend.Unit
             }
 
             // 根据索引选择对应的元素并返回
-            T[] selectedElements = new T[selectionCount];
-            for (int i = 0; i < selectionCount; i++)
+            T[] selectedElements = new T[maxSelection];
+            for (int i = 0; i < maxSelection; i++)
             {
                 selectedElements[i] = array[selectedIndices[i]];
             }

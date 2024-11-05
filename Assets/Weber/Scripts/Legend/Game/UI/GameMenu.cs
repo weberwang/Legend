@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Unit;
+using Weber.Widgets.Popup;
 
 namespace Weber.Scripts.Legend.Game.UI
 {
@@ -21,9 +22,9 @@ namespace Weber.Scripts.Legend.Game.UI
 
         private void Awake()
         {
-            Signals.Subscribe(this, SignalNames.OnEnemyDeath);
-            Signals.Subscribe(this, SignalNames.OnPickCoin);
-            Signals.Subscribe(this, SignalNames.OnPickXP);
+            Signals.Subscribe(this, SignalNames.ENEMY_DEATH);
+            Signals.Subscribe(this, SignalNames.PICK_COIN);
+            Signals.Subscribe(this, SignalNames.PICK_XP);
         }
 
         public void UpdateGameTime(int totalSeconds)
@@ -39,7 +40,7 @@ namespace Weber.Scripts.Legend.Game.UI
 
         public void OnReceiveSignal(SignalArgs args)
         {
-            if (args.signal == SignalNames.OnEnemyDeath)
+            if (args.signal == SignalNames.ENEMY_DEATH)
             {
                 using (var builder = ZString.CreateStringBuilder())
                 {
@@ -50,7 +51,7 @@ namespace Weber.Scripts.Legend.Game.UI
                 return;
             }
 
-            if (args.signal == SignalNames.OnPickCoin)
+            if (args.signal == SignalNames.PICK_COIN)
             {
                 using (var builder = ZString.CreateStringBuilder())
                 {
@@ -61,7 +62,7 @@ namespace Weber.Scripts.Legend.Game.UI
                 return;
             }
 
-            if (args.signal == SignalNames.OnPickXP)
+            if (args.signal == SignalNames.PICK_XP)
             {
                 return;
             }
@@ -73,6 +74,11 @@ namespace Weber.Scripts.Legend.Game.UI
             _gameTimeText.text = "00:00";
             _killedText.text = "0";
             _coinText.text = "0";
+        }
+
+        public void OnClickPause()
+        {
+            PopupManager.ShowPopup(PopupName.POPUP_PAUSE);
         }
     }
 }

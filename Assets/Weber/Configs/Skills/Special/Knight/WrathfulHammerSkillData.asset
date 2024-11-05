@@ -18,7 +18,7 @@ MonoBehaviour:
   classType: 0
   maxLevel: 10
   skillName: "\u6124\u6012\u4E4B\u9524"
-  description: 
+  description: "\u6254\u51FA\u4E00\u628A\u9B54\u6CD5\u9524\u98DE\u884C\u4E00\u6BB5\u65F6\u95F4\u540E\u98DE\u56DE\u6765"
   icon: {fileID: 0}
   stats:
   - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}

@@ -90,6 +90,11 @@ namespace Weber.Scripts.Legend.Skill
             }
         }
 
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         private void LateUpdate()
         {
             if (_bindType == BindType.Follow && _followSpeed > 0 && CharacterUnit is not null)
@@ -126,12 +131,12 @@ namespace Weber.Scripts.Legend.Skill
 
         public virtual void OnActive()
         {
-            if (renderObject is not null) renderObject.SetActive(true);
+            if (renderObject != null) renderObject.SetActive(true);
         }
 
         public virtual void OnDeactive()
         {
-            if (renderObject is not null) renderObject.SetActive(false);
+            if (renderObject != null) renderObject.SetActive(false);
         }
 
         #region 编辑器
@@ -163,14 +168,14 @@ namespace Weber.Scripts.Legend.Skill
 
         #endregion
 
-        public virtual void UpdateSkill(SkillEffectStatValue learnSkill)
+        public virtual bool UpdateSkill(SkillEffectStatValue learnSkill)
         {
-            if (learnSkill == null) return;
+            if (learnSkill == null) return false;
             var runtimeAttributeData = _traits.RuntimeStats.Get(learnSkill.stat.ID);
             if (runtimeAttributeData != null)
             {
                 Debug.Log("找不到属性：" + learnSkill.stat.ID);
-                return;
+                return false;
             }
 
             runtimeAttributeData.AddModifier(learnSkill.changeValueType, learnSkill.value);
@@ -178,6 +183,8 @@ namespace Weber.Scripts.Legend.Skill
             {
                 CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
             }
+
+            return true;
         }
 
         public float GetRuntimeStatDataValue(string statID)

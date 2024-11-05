@@ -4,6 +4,7 @@ using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
 using GPUInstancer.CrowdAnimations;
 using UnityEngine;
+using Weber.Scripts.Legend.Game;
 using Weber.Scripts.Legend.Unit;
 
 namespace Weber.Scripts.Common.Extra
@@ -72,6 +73,7 @@ namespace Weber.Scripts.Common.Extra
         public override void OnUpdate()
         {
             // base.OnUpdate();
+            if (Character.IsDead) return;
             if (_crowdInstance is null)
             {
                 _crowdInstance = Character.GetComponentInChildren<GPUICrowdPrefab>();
@@ -127,7 +129,21 @@ namespace Weber.Scripts.Common.Extra
             // this.m_Animator.SetFloat(K_PIVOT_SPEED, this.m_IndependentParameters[K_PIVOT_SPEED].Current);
             // this.m_Animator.SetFloat(K_GROUNDED, this.m_IndependentParameters[K_GROUNDED].Current);
             // this.m_Animator.SetFloat(K_STAND, this.m_IndependentParameters[K_STAND].Current);
-            if (_run != null) GPUICrowdAPI.StartAnimation(_crowdInstance, _run, transitionTime: 0.3f);
+            switch (Game.Instance.GameState)
+            {
+                case GameState.Playing:
+                    if (Game.Instance.Paused)
+                    {
+                        GPUICrowdAPI.SetAnimationSpeed(_crowdInstance, 0);
+                    }
+                    else
+                    {
+                        GPUICrowdAPI.SetAnimationSpeed(_crowdInstance, 1);
+                        if (_run != null) GPUICrowdAPI.StartAnimation(_crowdInstance, _run, transitionTime: 0.3f);
+                    }
+
+                    break;
+            }
         }
     }
 }

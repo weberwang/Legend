@@ -70,7 +70,7 @@ MonoBehaviour:
     m_HitEffect:
       m_Property:
         rid: 5668441469287399652
-    m_HitPause: 1
+    m_HitPause: 0
     m_HitPauseTimeScale: 0.05
     m_HitPauseDelay: 0.1
     m_HitPauseDuration: 0.1

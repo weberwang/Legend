@@ -49,7 +49,7 @@ namespace Weber.Scripts.Legend.Unit
             traits = GetComponent<Traits>();
             HealthAttributes = GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH);
             OnCreate();
-            Signals.Subscribe(this, SignalNames.OnSpellHit);
+            Signals.Subscribe(this, SignalNames.SPELL_HIT);
         }
 
         protected virtual void OnCreate()
@@ -63,7 +63,7 @@ namespace Weber.Scripts.Legend.Unit
 
         private void OnDestroy()
         {
-            Signals.Unsubscribe(this, SignalNames.OnSpellHit);
+            Signals.Unsubscribe(this, SignalNames.SPELL_HIT);
         }
 
         private void Update()
@@ -258,7 +258,7 @@ namespace Weber.Scripts.Legend.Unit
         public void AddBattleProp(BattleProp battleProp)
         {
             _battleProps.Add(battleProp);
-            Signals.Emit(new SignalArgs(SignalNames.OnSkillLearned, battleProp.gameObject));
+            Signals.Emit(new SignalArgs(SignalNames.SKILL_LEARNED, battleProp.gameObject));
         }
 
         public BattleProp GetBattleProp(UniqueID skillID)
@@ -277,9 +277,10 @@ namespace Weber.Scripts.Legend.Unit
         public void OnReceiveSignal(SignalArgs args)
         {
             if (Character.IsDead) return;
-            if (args.signal == SignalNames.OnSpellHit)
+            if (args.signal == SignalNames.SPELL_HIT)
             {
                 OnSkillHit(args.invoker.Get<BattleProp>());
+                return;
             }
         }
 

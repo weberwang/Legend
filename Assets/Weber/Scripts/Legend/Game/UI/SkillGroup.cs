@@ -14,17 +14,17 @@ namespace Weber.Scripts.Legend.Game.UI
 
         private void Awake()
         {
-            Signals.Subscribe(this, SignalNames.OnSkillLearned);
+            Signals.Subscribe(this, SignalNames.SKILL_LEARNED);
         }
 
         private void OnDestroy()
         {
-            Signals.Unsubscribe(this, SignalNames.OnSkillLearned);
+            Signals.Unsubscribe(this, SignalNames.SKILL_LEARNED);
         }
 
         public void OnReceiveSignal(SignalArgs args)
         {
-            if (args.signal == SignalNames.OnSkillLearned)
+            if (args.signal == SignalNames.SKILL_LEARNED)
             {
                 var battleProp = args.invoker.Get<BattleProp>();
                 var skill = battleProp.SkillData;

@@ -292,7 +292,7 @@ namespace Weber.Scripts.Legend.Skill
                 _effectInstance = effectInstance;
             }
 
-            Signals.Emit(new SignalArgs(SignalNames.OnSpellHit, source.gameObject));
+            Signals.Emit(new SignalArgs(SignalNames.SPELL_HIT, source.gameObject));
             if (!pierce)
             {
                 gameObject.SetActive(false);

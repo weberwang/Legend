@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 21bc2f27ca2d83d4f915756af0ee8632
   m_SerializeEntries:
+  - m_GUID: 0e30213b89a2bae46a1b94166edff64b
+    m_Address: Assets/Weber/Addressable/Prefabs/Popups/PausePopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 139e0e3f53859de4888039f0407fd068
     m_Address: Assets/Weber/Addressable/Config/EnemySpawnConfig_1.asset
     m_ReadOnly: 0
@@ -42,6 +47,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9851b14adfd4763459022206108616fb
     m_Address: Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b577237e097bc894da7fe0348618e538
+    m_Address: Assets/Weber/Addressable/Prefabs/Popups/ChoiceSKillPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

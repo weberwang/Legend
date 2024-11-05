@@ -40,7 +40,7 @@ MonoBehaviour:
       value: 0
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 89675af48f19b3440bab974c7570d4a7, type: 2}
-      value: 100
+      value: 1000
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
       value: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
       value: 0
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 87284fdd842f41a46aa1f86adfe54db7, type: 2}
-      value: 0
+      value: 1
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
       value: 0

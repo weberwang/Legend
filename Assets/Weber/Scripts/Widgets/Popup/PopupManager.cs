@@ -9,7 +9,7 @@ namespace Weber.Widgets.Popup
     {
         private static List<Popup> _popups = new List<Popup>();
 
-        private const string PopupPath = "Assets/Weber/Prefabs/Popups/{0}.prefab";
+        private const string PopupPath = "Assets/Weber/Addressable/Prefabs/Popups/{0}.prefab";
 
         public static void ShowPopup(string name, object data = null)
         {
@@ -40,6 +40,16 @@ namespace Weber.Widgets.Popup
                     return;
                 }
             }
+        }
+
+        public static void Clear()
+        {
+            foreach (var popup in _popups)
+            {
+                popup.Hide();
+            }
+
+            _popups.Clear();
         }
     }
 }

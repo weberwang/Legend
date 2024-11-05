@@ -1,4 +1,5 @@
 ﻿using GameCreator.Runtime.Common;
+using GameCreator.Runtime.Stats;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -20,6 +21,7 @@ namespace Weber.Scripts.Legend.Unit
         {
             _characterData = EnemyFactory.Instance.GetEnemyData(ID);
             Character.Motion.Radius = _characterData.radius;
+            UpdateAttributes();
         }
 
         private void FixedUpdate()
@@ -29,6 +31,18 @@ namespace Weber.Scripts.Legend.Unit
             {
                 Attack(_hits[0].collider.Get<CharacterUnit>());
             }
+        }
+
+        private void UpdateAttributes()
+        {
+            foreach (var skillEffectStatValue in _characterData.skillValues)
+            {
+                var statID = skillEffectStatValue.stat.ID.ToString();
+                GetRuntimeStatData(statID).ClearModifiers();
+                GetRuntimeStatData(statID).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
+            }
+
+            GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH).Value = GetRuntimeStatData(TraitsID.TRAITS_MAX_HEALTH).Value;
         }
 
         private void Attack(CharacterUnit characterUnit)

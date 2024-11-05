@@ -4,6 +4,7 @@ using GameCreator.Runtime.Characters;
 using GameCreator.Runtime.Common;
 using Pathfinding;
 using UnityEngine;
+using Weber.Scripts.Legend.Game;
 using Random = UnityEngine.Random;
 
 namespace Weber.Scripts.Common.Extra
@@ -65,6 +66,18 @@ namespace Weber.Scripts.Common.Extra
             if (Character.IsDead)
             {
                 _AIPath.canMove = false;
+            }
+            else
+            {
+                switch (Game.Instance.GameState)
+                {
+                    case GameState.Over:
+                        _AIPath.canMove = false;
+                        break;
+                    case GameState.Playing:
+                        _AIPath.canMove = !Game.Instance.Paused;
+                        break;
+                }
             }
         }
 

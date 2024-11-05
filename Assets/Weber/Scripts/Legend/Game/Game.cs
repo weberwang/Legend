@@ -1,14 +1,12 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Common;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Game.UI;
 using Weber.Scripts.Legend.Unit;
 using Weber.Widgets;
-using Random = UnityEngine.Random;
+using Weber.Widgets.Popup;
 
 namespace Weber.Scripts.Legend.Game
 {
@@ -22,6 +20,10 @@ namespace Weber.Scripts.Legend.Game
 
         public int PickedCoin { get; private set; }
 
+        public bool Paused { get; private set; }
+
+        private Hero _hero;
+
         protected virtual void OnCreate()
         {
             Application.targetFrameRate = 300;
@@ -34,16 +36,31 @@ namespace Weber.Scripts.Legend.Game
             var heroPrefab = await HeroManager.Instance.LoadHeroPrefab("Knight");
             Instantiate(heroPrefab, new Vector3(10, 1, 0), Quaternion.identity);
             StartGame();
+            _hero = ShortcutPlayer.Get<Hero>();
+            _hero.OnDeath += OnPlayerDeath;
         }
+
 
         private void Update()
         {
             switch (GameState)
             {
                 case GameState.Playing:
-                    GameTime += Time.deltaTime;
-                    _gameMenu.UpdateGameTime(Convert.ToInt32(GameTime));
+                    if (!Paused)
+                    {
+                        GameTime += Time.deltaTime;
+                        _gameMenu.UpdateGameTime(Convert.ToInt32(GameTime));
+                    }
+
                     break;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_hero is not null)
+            {
+                _hero.OnDeath -= OnPlayerDeath;
             }
         }
 
@@ -56,10 +73,33 @@ namespace Weber.Scripts.Legend.Game
             _gameMenu.StartGame();
         }
 
+        public void PauseGame()
+        {
+            Paused = true;
+            TimeManager.Instance.SetTimeScale(0, 0);
+            Signals.Emit(new SignalArgs(SignalNames.PAUSE_GAME, null));
+        }
+
+        public void ResumeGame()
+        {
+            Paused = false;
+            TimeManager.Instance.SetTimeScale(1, 0);
+        }
+
+        public void EndGame()
+        {
+            GameState = GameState.Over;
+        }
+
         public void PickCoin(int coin)
         {
             PickedCoin += coin;
-            Signals.Emit(new SignalArgs(SignalNames.OnPickCoin, gameObject));
+            Signals.Emit(new SignalArgs(SignalNames.PICK_COIN, gameObject));
+        }
+
+        private void OnPlayerDeath(CharacterUnit arg0)
+        {
+            EndGame();
         }
     }
 
@@ -67,7 +107,6 @@ namespace Weber.Scripts.Legend.Game
     {
         Wait,
         Playing,
-        Pause,
         Over
     }
 }

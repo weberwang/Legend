@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bf04c6c523494eb004f6311ff373e1, type: 3}
   m_Name: LearnSkillData
   m_EditorClassIdentifier: 
-  specialSkillLevel: 0a00000014000000
+  specialSkillLevel: 0100000014000000
   commonSkillLevel: 050000000f0000001900000023000000
   skillHitEffectLevel: 0a000000

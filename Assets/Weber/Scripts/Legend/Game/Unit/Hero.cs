@@ -1,12 +1,15 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Common;
 using GameCreator.Runtime.Stats;
 using UnityEngine;
+using UnityEngine.Playables;
 using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Game;
 using Weber.Scripts.Legend.Game.Items;
 using Weber.Scripts.Model;
+using Weber.Widgets.Popup;
 using Math = Unity.Physics.Math;
 
 namespace Weber.Scripts.Legend.Unit
@@ -21,6 +24,13 @@ namespace Weber.Scripts.Legend.Unit
             _characterData = HeroManager.Instance.GetHeroData(ID);
             Character.Motion.Radius = _characterData.radius;
             UpdateAttributes();
+            LearnSkill();
+        }
+
+        private async void LearnSkill()
+        {
+            await UniTask.Delay(1000);
+            UpgradeLevel();
         }
 
         protected override void Death()
@@ -48,7 +58,9 @@ namespace Weber.Scripts.Legend.Unit
         {
             foreach (var skillEffectStatValue in _characterData.skillValues)
             {
-                GetRuntimeStatData(skillEffectStatValue.stat.ID.ToString()).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
+                var statID = skillEffectStatValue.stat.ID.ToString();
+                GetRuntimeStatData(statID).ClearModifiers();
+                GetRuntimeStatData(statID).AddModifier(ModifierType.Constant, skillEffectStatValue.value);
             }
 
             //根据技能升级初始化属性
@@ -65,15 +77,34 @@ namespace Weber.Scripts.Legend.Unit
         private void UpgradeLevel()
         {
             var skillDatas = ChoiceSkillDatas();
+            PopupManager.ShowPopup(PopupName.POPUP_CHOICE_SKILL, skillDatas);
         }
 
         public void AddExp(int xp)
         {
+            var levelStat = GetRuntimeStatData(TraitsID.TRAITS_LEVEL);
+            var currentLevel = levelStat.Value;
             var xpGain = GetRuntimeStatValue(TraitsID.TRAITS_XP_GAIN);
             var xpData = GetRunTimeAttributeData(TraitsID.TRAITS_XP);
             xpData.Value += ((1 + xpGain) * xp);
             //todo 检测是否升级,播放升级特效，弹出升级面板
-            Signals.Emit(new SignalArgs(SignalNames.OnPickXP, gameObject));
+            if (levelStat.Value > currentLevel)
+            {
+                UpgradeLevel();
+            }
+
+            Signals.Emit(new SignalArgs(SignalNames.PICK_XP, gameObject));
+        }
+
+        public UpgradeSkillData[] RefreshChoiceSkill()
+        {
+            var rerolls = GetRuntimeStatValue(TraitsID.TRAITS_REROLLS);
+            if (rerolls > 0)
+            {
+                return ChoiceSkillDatas();
+            }
+
+            return null;
         }
     }
 }

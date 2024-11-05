@@ -32,6 +32,5 @@ namespace Weber.Scripts.Model
             Legendary,  // 传说
             Mythical    // 神话
         }
-
     }
 }

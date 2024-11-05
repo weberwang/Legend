@@ -15,9 +15,10 @@ MonoBehaviour:
   ID:
     m_SerializedID:
       m_String: 83139dfa-dc7e-46f3-a9af-83a8b5a1638a
+  classType: 0
   maxLevel: 0
   skillName: "\u590D\u4EC7\u4E4B\u6012"
-  description: 
+  description: "\u53EC\u5524\u5DE8\u9524\u7838\u5411\u524D\u65B9"
   icon: {fileID: 0}
   stats:
   - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}

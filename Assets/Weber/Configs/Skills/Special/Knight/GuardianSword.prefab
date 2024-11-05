@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e6fa77f80f480b82f57d8a46da1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderObject: {fileID: 0}
+  renderObject: {fileID: 0}
   _bindType: 2
   _followSpeed: 100
   _handleField:
@@ -229,6 +229,7 @@ MonoBehaviour:
     m_Bits: 2048
   _hitGap: 0.2
   _prediction: 1
+  _delay: 0
   _section: {fileID: 2938350185128933703}
   _shape:
     rid: 5668441488067395585

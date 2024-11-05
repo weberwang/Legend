@@ -24,15 +24,24 @@ namespace Weber.Scripts.Legend.Skill
 
         private Dictionary<int, float> _attackedTargets = new Dictionary<int, float>();
 
+        private float _timer = 0;
+
         public override void OnActive()
         {
             base.OnActive();
-            StartCoroutine("WaitAttack");
+            if (_timer <= 0)
+            {
+                WaitAttack();
+                _timer = _delay;
+            }
+            else
+            {
+                _timer -= Time.deltaTime;
+            }
         }
 
-        private IEnumerator WaitAttack()
+        private void WaitAttack()
         {
-            yield return new WaitForSeconds(_delay);
             var hits = new List<StrikeOutput>();
             var strikeOutputs = _shape.Collect(_section, _layerMask, _prediction);
             // 更新每个目标的冷却时间
@@ -75,7 +84,6 @@ namespace Weber.Scripts.Legend.Skill
         {
             base.OnDeactive();
             _attackedTargets.Clear();
-            StopAllCoroutines();
         }
 
         private void Attack(CharacterUnit target)
@@ -83,12 +91,17 @@ namespace Weber.Scripts.Legend.Skill
             target.OnSkillHit(this);
         }
 
-        public override void UpdateSkill(SkillEffectStatValue learnSkill)
+        public override bool UpdateSkill(SkillEffectStatValue learnSkill)
         {
-            base.UpdateSkill(learnSkill);
+            if (!base.UpdateSkill(learnSkill))
+            {
+                return false;
+            }
+
             var size = GetRuntimeStatDataValue(learnSkill.stat.ID.String);
             renderObject.transform.localScale = Vector3.one * size / Convert.ToSingle(GetRuntimeStatData(learnSkill.stat.ID.String).Base);
             _shape.ChangeSize(size);
+            return true;
         }
 
         private void OnDrawGizmosSelected()

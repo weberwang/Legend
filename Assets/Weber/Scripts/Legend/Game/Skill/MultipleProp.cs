@@ -27,7 +27,7 @@ namespace Weber.Scripts.Legend.Skill
         {
             for (int i = 0; i < _battleProps.Count; i++)
             {
-                if (_battleProps[i] is not null) _battleProps[i].SetActive(false);
+                if (_battleProps[i] != null) _battleProps[i].SetActive(false);
             }
 
             _battleProps.Clear();

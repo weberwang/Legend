@@ -17,18 +17,17 @@ namespace Weber.Widgets.Popup
 
         protected object _data = null;
 
-        private Tweener _showTween;
-        private Tweener _hideTween;
+        // private Tweener _showTween;
+        // private Tweener _hideTween;
 
         private void Awake()
         {
-           
             if (closeButton != null)
             {
                 closeButton.onClick.AddListener(OnClickClose);
             }
 
-            content.Require<CanvasGroup>().alpha = 0;
+            // content.Require<CanvasGroup>().alpha = 0;
         }
 
         private void OnClickClose()
@@ -67,9 +66,9 @@ namespace Weber.Widgets.Popup
 
         public virtual void Show(object data = null)
         {
-            if (_showTween != null && _showTween.IsPlaying()) return;
+            // if (_showTween != null && _showTween.IsPlaying()) return;
             _data = data;
-            _showTween = content.Get<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.Linear);
+            // _showTween = content.Get<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.Linear);
         }
 
         public void Close()
@@ -79,9 +78,10 @@ namespace Weber.Widgets.Popup
 
         public virtual void Hide()
         {
-            if (_hideTween != null && _hideTween.IsPlaying()) return;
-            _showTween.Kill();
-            _hideTween = content.Get<CanvasGroup>().DOFade(0, 0.3f).SetEase(Ease.Linear).OnComplete(() => { Destroy(gameObject); });
+            // if (_hideTween != null && _hideTween.IsPlaying()) return;
+            // _showTween.Kill();
+            // _hideTween = content.Get<CanvasGroup>().DOFade(0, 0.3f).SetEase(Ease.Linear).OnComplete(() => { Destroy(gameObject); });
+            Destroy(gameObject);
         }
     }
 }

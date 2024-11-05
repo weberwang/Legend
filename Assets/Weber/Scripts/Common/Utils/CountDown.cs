@@ -113,9 +113,14 @@ namespace Weber.Scripts.Common.Utils
             return false;
         }
 
-        public void End()
+        public void Pause()
         {
             _end = true;
+        }
+
+        public void Resume()
+        {
+            _end = false;
         }
 
         private void OnUpdateCooldown()
@@ -140,7 +145,7 @@ namespace Weber.Scripts.Common.Utils
                 _amount++;
                 if (_amount >= amount)
                 {
-                    End();
+                    Pause();
                 }
             }
         }

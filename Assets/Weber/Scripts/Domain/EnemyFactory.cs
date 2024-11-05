@@ -159,7 +159,7 @@ namespace Weber.Scripts.Domain
             EnemyKillCount++;
             Enemy enemy = characterUnit as Enemy;
             enemy.OnDeath -= OnEnemyDeath;
-            Signals.Emit(new SignalArgs(SignalNames.OnEnemyDeath, enemy.gameObject));
+            Signals.Emit(new SignalArgs(SignalNames.ENEMY_DEATH, enemy.gameObject));
         }
 
         private bool SpawnEnemyOffScreen(out Vector3 position)

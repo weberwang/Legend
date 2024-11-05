@@ -1752,7 +1752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c924eacff884626a5aa4c90cf311c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Class: {fileID: 11400000, guid: f355c3b23cdcc0549a1669ba8194493d, type: 2}
+  m_Class: {fileID: 11400000, guid: 5f742d17e2b858c48b3eb16b2c1973af, type: 2}
   m_OverrideAttributes:
     m_Keys:
     - m_String: Health
@@ -1763,70 +1763,10 @@ MonoBehaviour:
         m_Value: 1
   m_OverrideStats:
     m_Keys:
-    - m_String: Armor
-    - m_String: Cooldown
-    - m_String: Critical-Chance
-    - m_String: Critical-Damage
-    - m_String: Damage
-    - m_String: Health-Regeneration
-    - m_String: Level
-    - m_String: Luck
-    - m_String: Max-Health
-    - m_String: Move-Speed
-    - m_String: Pick-Distance
-    - m_String: Rerolls
-    - m_String: Spell-Size
     - m_String: XP
-    - m_String: XP-Gain
+    - m_String: Armor
+    - m_String: Max-Health
     m_Values:
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
     - m_IsExpanded: 0
       m_ChangeBase:
         m_IsEnabled: 0
