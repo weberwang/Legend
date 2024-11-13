@@ -17,8 +17,8 @@ MonoBehaviour:
       m_String: 3a79ca9b-b9d4-42db-ad40-f4a92b60ba76
   classType: 2
   maxLevel: 99
-  skillName: "\u9B54\u6CD5\u51B7\u5374"
-  description: 
+  skillName: "\u9B54\u6CD5\u6069\u60E0"
+  description: "\u51CF\u5C11\u6240\u6709\u9B54\u6CD5\u51B7\u5374\u65F6\u95F4"
   icon: {fileID: 0}
   stats:
   - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}

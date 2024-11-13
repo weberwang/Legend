@@ -8,7 +8,7 @@ namespace Weber.Scripts.Legend.Unit
 {
     public class Pick : MonoBehaviour
     {
-        [SerializeField] private LayerMaskValue _xpLayer;
+        [SerializeField] private LayerMask _xpLayer;
 
         private RaycastHit[] _hits = new RaycastHit[100];
 
@@ -24,11 +24,11 @@ namespace Weber.Scripts.Legend.Unit
 
         private void FixedUpdate()
         {
-            var count = Physics.SphereCastNonAlloc(_transform.position + Vector3.up * 10, _hero.PickRadius, Vector3.down, _hits, 0.5f, _xpLayer.Value);
+            var count = Physics.SphereCastNonAlloc(_transform.position, _hero.PickRadius, Vector3.down, _hits, 1f, _xpLayer, QueryTriggerInteraction.Collide);
             for (int i = 0; i < count; i++)
             {
                 var result = _hits[i];
-                var dropItem = result.collider.GetComponent<DropItem>();
+                var dropItem = result.collider.GetComponentInParent<DropItem>();
                 dropItem.PickByHero();
             }
         }

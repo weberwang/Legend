@@ -22,10 +22,13 @@ MonoBehaviour:
       value: 0
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 89675af48f19b3440bab974c7570d4a7, type: 2}
-      value: 1000
+      value: 100
       changeValueType: 0
-    - stat: {fileID: 11400000, guid: a521d0b7a411bc64cbcfb097194990d9, type: 2}
-      value: 1
+    - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
+      value: 2
+      changeValueType: 0
+    - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
+      value: 10
       changeValueType: 0
     radius: 0.5
     idle: {fileID: 0}
@@ -33,3 +36,4 @@ MonoBehaviour:
     hurt: {fileID: 0}
     death: {fileID: 0}
     type: 0
+    awardXP: 10

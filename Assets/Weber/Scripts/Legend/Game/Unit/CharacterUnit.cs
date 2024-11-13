@@ -13,6 +13,7 @@ using Weber.Scripts.Common.Utils;
 using Weber.Scripts.Legend.Skill;
 using Weber.Scripts.Legend.SkillHitEffect;
 using Weber.Scripts.Model;
+using Weber.Widgets;
 using Random = UnityEngine.Random;
 
 namespace Weber.Scripts.Legend.Unit
@@ -30,6 +31,7 @@ namespace Weber.Scripts.Legend.Unit
         public int ID { get; private set; }
 
         protected Traits traits;
+        protected OnHealth onHealth;
         public RuntimeAttributeData HealthAttributes { get; private set; }
 
         private List<BattleProp> _battleProps = new List<BattleProp>();
@@ -47,6 +49,7 @@ namespace Weber.Scripts.Legend.Unit
             Transform = transform;
             Character = GetComponent<Character>();
             traits = GetComponent<Traits>();
+            onHealth = GetComponent<OnHealth>();
             HealthAttributes = GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH);
             OnCreate();
             Signals.Subscribe(this, SignalNames.SPELL_HIT);
@@ -74,6 +77,10 @@ namespace Weber.Scripts.Legend.Unit
 
         protected virtual void OnUpdate()
         {
+            var moveSpeed = GetRuntimeStatValue(TraitsID.TRAITS_MOVE_SPEED);
+            Character.Motion.LinearSpeed = moveSpeed;
+            var restoreHealth = GetRuntimeStatValue(TraitsID.TRAITS_HEALTH_REGENERATION);
+            RestoreHealth(restoreHealth);
         }
 
         private void UpdateHitEffect()
@@ -122,7 +129,8 @@ namespace Weber.Scripts.Legend.Unit
         private void OnHurt(float damage, bool ignoreArmor = false)
         {
             var armor = ignoreArmor ? 0 : GetRuntimeStatValue(TraitsID.TRAITS_ARMOR);
-            var realDamage = Mathf.FloorToInt(damage - armor);
+            var realDamage = Mathf.FloorToInt(damage - armor / (armor + 200));
+            Debug.Log("realDamage:" + realDamage);
             HealthAttributes.Value -= realDamage;
             if (HealthAttributes.Value <= 0)
             {
@@ -132,11 +140,23 @@ namespace Weber.Scripts.Legend.Unit
             {
                 Hit();
             }
+
+            onHealth?.OnHealthChange(realDamage);
+        }
+
+        public void RestoreHealth(float health)
+        {
+            if (health <= 0) return;
+            GetRunTimeAttributeData(TraitsID.TRAITS_HEALTH).Value += health;
+            // var healthInstance = PoolManager.Instance.Pick(_healthEffect, 1);
+            // var healthEffect = healthInstance.Get<FloatingText>();
+            // healthEffect.SetValue(health);
         }
 
         public void OnSkillHit(BattleProp battleProp)
         {
             if (Character.IsDead) return;
+            if (Character.Combat.Invincibility.IsInvincible) return;
             var damage = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_DAMAGE) * Random.Range(0.9f, 1.1f);
             var critical = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_CRITICAL);
             var criticalDamage = battleProp.GetRuntimeStatDataValue(TraitsID.TRAITS_CRITICAL_DAMAGE);
@@ -169,7 +189,6 @@ namespace Weber.Scripts.Legend.Unit
 
         private async void Hit()
         {
-            //todo 显示伤害效果
             await PlayGesture(_characterData.hurt);
         }
 
@@ -241,8 +260,8 @@ namespace Weber.Scripts.Legend.Unit
 
         public float GetRuntimeStatValue(string statID)
         {
-            var stat = traits.RuntimeStats.Get(statID);
-            if (stat is not null)
+            var stat = GetRuntimeStatData(statID);
+            if (stat != null)
             {
                 return Convert.ToSingle(stat.Value);
             }
@@ -299,6 +318,12 @@ namespace Weber.Scripts.Legend.Unit
             ID = id;
             Character.IsDead = false;
             OnCreate();
+        }
+
+        public void Knockback(Vector3 force)
+        {
+            //击退
+            Transform.position += force;
         }
     }
 }

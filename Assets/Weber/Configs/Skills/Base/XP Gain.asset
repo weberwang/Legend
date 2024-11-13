@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bedaba9d65b94c47b4e1952033ae4fb1, type: 3}
+  m_Name: XP Gain
+  m_EditorClassIdentifier: 
+  ID:
+    m_SerializedID:
+      m_String: 5fbffa41-7c10-4623-9b79-4e8316b4406f
+  classType: 2
+  maxLevel: 0
+  skillName: "\u7ECF\u9A8C\u83B7\u53D6\u7387"
+  description: "\u52A0\u5FEB\u5347\u7EA7\u901F\u5EA6"
+  icon: {fileID: 0}
+  stats:
+  - stat: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
+    value: 0
+    changeValueType: 1

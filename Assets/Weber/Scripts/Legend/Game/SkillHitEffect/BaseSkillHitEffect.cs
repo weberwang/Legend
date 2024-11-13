@@ -30,6 +30,8 @@ namespace Weber.Scripts.Legend.SkillHitEffect
             _skillData = skillData;
             LoadEffect();
             _countDown.Start();
+            _countDown.EventTrigger += ActiveHitEffect;
+            _countDown.EventCooldown += DeactiveHitEffect;
         }
 
         private void LoadEffect()
@@ -41,15 +43,16 @@ namespace Weber.Scripts.Legend.SkillHitEffect
         public virtual void OnUpdate()
         {
             if (IsEnd) return;
-            if (_countDown.OnUpdate())
-            {
-                ActiveHitEffect();
-            }
-
-            if (_countDown.Ended)
-            {
-                DeactiveHitEffect();
-            }
+            _countDown.OnUpdate();
+            // if (_countDown.OnUpdate())
+            // {
+            //     ActiveHitEffect();
+            // }
+            //
+            // if (_countDown.Ended)
+            // {
+            //     DeactiveHitEffect();
+            // }
         }
 
         protected virtual void ActiveHitEffect()
@@ -60,6 +63,8 @@ namespace Weber.Scripts.Legend.SkillHitEffect
         protected virtual void DeactiveHitEffect()
         {
             IsEnd = true;
+            _countDown.EventTrigger -= ActiveHitEffect;
+            _countDown.EventCooldown -= DeactiveHitEffect;
         }
     }
 

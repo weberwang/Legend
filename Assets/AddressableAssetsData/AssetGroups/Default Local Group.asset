@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e52beca73427174ba0d267a211c2f36
+    m_Address: Assets/Weber/Addressable/Prefabs/Items/XPBall.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9851b14adfd4763459022206108616fb
     m_Address: Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy.prefab
     m_ReadOnly: 0

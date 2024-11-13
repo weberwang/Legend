@@ -1,4 +1,6 @@
-﻿namespace Weber.Scripts.Common.Utils
+﻿using GameCreator.Runtime.Common;
+
+namespace Weber.Scripts.Common.Utils
 {
     public class TraitsID
     {
@@ -18,6 +20,9 @@
         public const string TRAITS_CRITICAL_DAMAGE = "Critical-Damage";
         public const string TRAITS_PICK_DISTANCE = "Pick-Distance";
         public const string TRAITS_REROLLS = "Rerolls";
+        public const string TRAITS_HEALTH_REGENERATION = "Health-Regeneration";
+        public const string TRAITS_SPELL_SIZE = "Spell-Size";
+        public const string TRAITS_REVIVE = "Revive";
     }
 
     public class SignalNames
@@ -27,8 +32,12 @@
         public const string ENEMY_DEATH = "EnemyDeath";
         public const string PICK_COIN = "PickCoin";
         public const string PICK_XP = "PickXP";
+        public const string LEVEL_UP = "LevelUp";
         public const string PAUSE_GAME = "PauseGame";
         public const string RESUME_GAME = "ResumeGame";
+        public const string GAME_START = "GameStart";
+        public const string GAME_OVER = "GameOver";
+        public const string HURT = "Hurt";
     }
 
     public class PopupName

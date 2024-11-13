@@ -142,11 +142,12 @@ namespace Weber.Scripts.Legend.Unit
             }
             else
             {
-                var baseIndex = Random.Range(0, _baseSkillDatas.Length);
-                var skills = SelectRandomElements(_learnedSkills.ToArray(), 2);
+                var maxSkillCount = Mathf.Min(_learnedSkills.Count, 2);
+                var skills = SelectRandomElements(_learnedSkills.ToArray(), maxSkillCount);
                 var skillList = new List<SkillData>(skills);
-                skillList.AddRange(skills);
-                skillList.Add(_baseSkillDatas[baseIndex]);
+                var lastCount = 3 - maxSkillCount;
+                var last = SelectRandomElements(_baseSkillDatas, lastCount);
+                skillList.AddRange(last);
                 skillDatas = skillList.ToArray();
             }
 
@@ -156,7 +157,7 @@ namespace Weber.Scripts.Legend.Unit
             {
                 var skillData = skillDatas[i];
                 //第一次学习该技能
-                if (skillData.Level == 0)
+                if (skillData.classType != ClassType.Base && skillData.Level == 0)
                 {
                     upgradeSkillDatas.Add(new UpgradeSkillData(skillData, LuckConfig.SkillRarity.Common, null));
                     continue;

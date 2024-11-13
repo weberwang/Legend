@@ -83,12 +83,13 @@ namespace Weber.Scripts.Legend.Game
         public void ResumeGame()
         {
             Paused = false;
-            TimeManager.Instance.SetTimeScale(1, 0);
+            if (TimeManager.Instance != null) TimeManager.Instance.SetTimeScale(1, 0);
         }
 
         public void EndGame()
         {
             GameState = GameState.Over;
+            _gameMenu.GameOver();
         }
 
         public void PickCoin(int coin)

@@ -20,6 +20,9 @@ namespace Weber.Scripts.Legend.Skill
         [SerializeField, ShowIf("IsBindFollow")]
         protected float _followSpeed;
 
+        [SerializeField, ShowIf("IsBindFollow")]
+        private float _distance;
+
         [SerializeField, ShowIf("IsBindBone")] protected HandleField _handleField = new HandleField();
 
         [SerializeField, ShowIf("OffsetEnable")]
@@ -30,8 +33,8 @@ namespace Weber.Scripts.Legend.Skill
         [field: NonSerialized] public AttackSkillData SkillData { get; private set; }
 
 
-        private Transform _transform;
-        private Transform _targetTransform;
+        protected Transform _transform;
+        protected Transform _targetTransform;
 
         private Traits _traits;
 
@@ -46,8 +49,14 @@ namespace Weber.Scripts.Legend.Skill
             _traits = gameObject.Get<Traits>();
         }
 
+        private void OnDestroy()
+        {
+            CountDown.EventCooldown -= OnCooldown;
+            CountDown.EventTrigger -= OnActive;
+        }
 
-        public virtual void SetUnitTarget(CharacterUnit characterUnit, SkillData skillData)
+
+        public void SetUnitTarget(CharacterUnit characterUnit, SkillData skillData)
         {
             CharacterUnit = characterUnit;
             SkillData = skillData as AttackSkillData;
@@ -70,7 +79,13 @@ namespace Weber.Scripts.Legend.Skill
 
             for (int i = 0; i < skillData.stats.Length; i++)
             {
-                var statID = skillData.stats[i].stat.ID.String;
+                var skillEffectStatValue = skillData.stats[i];
+                if (skillEffectStatValue.ignoreInitialValue)
+                {
+                    continue;
+                }
+
+                var statID = skillEffectStatValue.stat.ID.String;
                 var stat = GetRuntimeStatData(statID);
                 stat.Base = skillData.stats[i].value;
                 stat.AddModifier(ModifierType.Constant, CharacterUnit.GetRuntimeStatValue(statID));
@@ -79,7 +94,15 @@ namespace Weber.Scripts.Legend.Skill
             CountDown = SkillData.countDown.Clone();
             CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
             CountDown.Start();
+            CountDown.EventCooldown += OnCooldown;
+            CountDown.EventTrigger += OnActive;
             CharacterUnit.AddBattleProp(this);
+            AfterUpdateSkill();
+            OnSetTarget();
+        }
+
+        protected virtual void OnSetTarget()
+        {
         }
 
         private void Update()
@@ -97,19 +120,23 @@ namespace Weber.Scripts.Legend.Skill
 
         private void LateUpdate()
         {
-            if (_bindType == BindType.Follow && _followSpeed > 0 && CharacterUnit is not null)
+            if (_bindType == BindType.Follow && _followSpeed > 0 && CharacterUnit != null)
             {
                 Vector3 targetPosition = _targetTransform.position;
+                targetPosition.y = 0;
                 Vector3 currentPosition = _transform.position;
+                currentPosition.y = 0;
+                if (Vector3.Distance(targetPosition, currentPosition) > _distance)
+                {
+                    // 仅更新x和z坐标
+                    Vector3 newPosition = Vector3.Lerp(
+                        new Vector3(currentPosition.x, CharacterUnit.transform.position.y, currentPosition.z),
+                        new Vector3(targetPosition.x, CharacterUnit.transform.position.y, targetPosition.z),
+                        _followSpeed * Time.deltaTime
+                    );
 
-                // 仅更新x和z坐标
-                Vector3 newPosition = Vector3.Lerp(
-                    new Vector3(currentPosition.x, CharacterUnit.transform.position.y, currentPosition.z),
-                    new Vector3(targetPosition.x, CharacterUnit.transform.position.y, targetPosition.z),
-                    _followSpeed * Time.deltaTime
-                );
-
-                transform.position = newPosition + _offset;
+                    transform.position = newPosition + _offset;
+                }
             }
         }
 
@@ -117,26 +144,35 @@ namespace Weber.Scripts.Legend.Skill
         {
             if (CountDown != null)
             {
-                if (CountDown.OnUpdate())
-                {
-                    OnActive();
-                }
-
-                if (CountDown.Ended)
-                {
-                    OnDeactive();
-                }
+                // if (CountDown.OnUpdate())
+                // {
+                //     OnActive();
+                // }
+                CountDown.OnUpdate();
+                // if (CountDown.Ended)
+                // {
+                //     OnDeactive();
+                // }
             }
         }
 
         public virtual void OnActive()
         {
             if (renderObject != null) renderObject.SetActive(true);
+            // for (var i = 0; i < SkillData.stats.Length; i++)
+            // {
+            //     var skillStat = SkillData.stats[i];
+            //     GetRuntimeStatData(skillStat.stat.ID.String).AddModifier(skillStat.changeValueType, skillStat.value);
+            // }
         }
 
         public virtual void OnDeactive()
         {
             if (renderObject != null) renderObject.SetActive(false);
+        }
+
+        public virtual void OnCooldown()
+        {
         }
 
         #region 编辑器
@@ -171,27 +207,34 @@ namespace Weber.Scripts.Legend.Skill
         public virtual bool UpdateSkill(SkillEffectStatValue learnSkill)
         {
             if (learnSkill == null) return false;
-            var runtimeAttributeData = _traits.RuntimeStats.Get(learnSkill.stat.ID);
-            if (runtimeAttributeData != null)
+            try
+            {
+                var runtimeAttributeData = _traits.RuntimeStats.Get(learnSkill.stat.ID);
+                runtimeAttributeData.AddModifier(learnSkill.changeValueType, learnSkill.value);
+                if (learnSkill.stat.ID.String == TraitsID.TRAITS_COOLDOWN)
+                {
+                    CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
+                }
+
+                AfterUpdateSkill(learnSkill);
+                return true;
+            }
+            catch (Exception e)
             {
                 Debug.Log("找不到属性：" + learnSkill.stat.ID);
                 return false;
             }
+        }
 
-            runtimeAttributeData.AddModifier(learnSkill.changeValueType, learnSkill.value);
-            if (learnSkill.stat.ID.String == TraitsID.TRAITS_COOLDOWN)
-            {
-                CountDown.UpdateCooldown(GetRuntimeStatDataValue(TraitsID.TRAITS_COOLDOWN));
-            }
-
-            return true;
+        protected virtual void AfterUpdateSkill(SkillEffectStatValue learnSkill = null)
+        {
         }
 
         public float GetRuntimeStatDataValue(string statID)
         {
             //所有的变化都已经施加
             var stat = GetRuntimeStatData(statID);
-            if (stat is null) return 0;
+            if (stat == null) return 0;
             return Convert.ToSingle(stat.Value);
         }
 

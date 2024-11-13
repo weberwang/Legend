@@ -14,7 +14,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   luckThresholds:
   - minLuck: 0
-    maxLuck: 0
+    maxLuck: 19
     rarityChances:
     - rarity: 0
       chance: 1
+  - minLuck: 20
+    maxLuck: 39
+    rarityChances:
+    - rarity: 0
+      chance: 0.8
+    - rarity: 1
+      chance: 0.2
+  - minLuck: 40
+    maxLuck: 59
+    rarityChances:
+    - rarity: 0
+      chance: 0.5
+    - rarity: 1
+      chance: 0.4
+    - rarity: 2
+      chance: 0.1
+  - minLuck: 60
+    maxLuck: 79
+    rarityChances:
+    - rarity: 0
+      chance: 0.2
+    - rarity: 1
+      chance: 0.5
+    - rarity: 2
+      chance: 0.2
+    - rarity: 3
+      chance: 0.1
+  - minLuck: 80
+    maxLuck: 99
+    rarityChances:
+    - rarity: 1
+      chance: 0.5
+    - rarity: 2
+      chance: 0.3
+    - rarity: 3
+      chance: 0.15
+    - rarity: 4
+      chance: 0.05
+  - minLuck: 100
+    maxLuck: 999
+    rarityChances:
+    - rarity: 1
+      chance: 0.3
+    - rarity: 2
+      chance: 0.3
+    - rarity: 3
+      chance: 0.25
+    - rarity: 4
+      chance: 0.15

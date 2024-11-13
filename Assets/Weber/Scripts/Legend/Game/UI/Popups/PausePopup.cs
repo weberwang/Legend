@@ -7,7 +7,7 @@ namespace Weber.Scripts.Legend.Game.UI.Popups
 {
     public class PausePopup : Popup
     {
-        private void OnDestroy()
+        protected override void OnClose()
         {
             Game.Instance.ResumeGame();
         }

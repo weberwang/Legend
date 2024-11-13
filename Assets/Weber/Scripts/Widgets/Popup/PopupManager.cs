@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using GameCreator.Runtime.Common;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 
 namespace Weber.Widgets.Popup
 {
@@ -11,21 +13,21 @@ namespace Weber.Widgets.Popup
 
         private const string PopupPath = "Assets/Weber/Addressable/Prefabs/Popups/{0}.prefab";
 
-        public static void ShowPopup(string name, object data = null)
+        public async static UniTask ShowPopup(string name, object data = null, UnityAction onClose = null)
         {
             // Show popup
-            Addressables.LoadAssetAsync<GameObject>(string.Format(PopupPath, name)).Completed += handle =>
-            {
-                var result = handle.Result;
-                var popupGameObject = Object.Instantiate(result);
-                popupGameObject.transform.SetParent(PopupCanvas.Instance.transform);
-                popupGameObject.transform.localPosition = Vector3.zero;
-                popupGameObject.transform.localScale = Vector3.one;
-                var popup = popupGameObject.Get<Popup>();
-                popup.popupName = name;
-                popup.Show(data);
-                _popups.Add(popup);
-            };
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(string.Format(PopupPath, name));
+            await asyncOperationHandle.Task;
+            var result = asyncOperationHandle.Result;
+            var popupGameObject = Object.Instantiate(result);
+            popupGameObject.transform.SetParent(PopupCanvas.Instance.transform);
+            popupGameObject.transform.localPosition = Vector3.zero;
+            popupGameObject.transform.localScale = Vector3.one;
+            var popup = popupGameObject.Get<Popup>();
+            popup.popupName = name;
+            popup.Show(data);
+            popup.EventClose += onClose;
+            _popups.Add(popup);
         }
 
         public static void HidePopup(string name)
@@ -50,6 +52,19 @@ namespace Weber.Widgets.Popup
             }
 
             _popups.Clear();
+        }
+
+        public static bool Exist(string name)
+        {
+            foreach (var popup in _popups)
+            {
+                if (popup.popupName == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

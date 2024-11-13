@@ -31,7 +31,7 @@ MonoBehaviour:
       value: 0
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
-      value: 0
+      value: 30
       changeValueType: 0
     - stat: {fileID: 11400000, guid: f55236c3e2ee06343b9ce54c818c7338, type: 2}
       value: 0
@@ -43,10 +43,10 @@ MonoBehaviour:
       value: 1000
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
-      value: 0
+      value: 5
       changeValueType: 0
     - stat: {fileID: 11400000, guid: b6021fc4b181aed4aad9e3384a940d45, type: 2}
-      value: 0
+      value: 2
       changeValueType: 0
     - stat: {fileID: 11400000, guid: 87284fdd842f41a46aa1f86adfe54db7, type: 2}
       value: 1

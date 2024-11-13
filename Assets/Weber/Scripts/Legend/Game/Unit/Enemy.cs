@@ -17,6 +17,8 @@ namespace Weber.Scripts.Legend.Unit
 
         private RaycastHit[] _hits = new RaycastHit[1];
 
+        public EnemyData EnemyData => _characterData as EnemyData;
+
         protected override void OnCreate()
         {
             _characterData = EnemyFactory.Instance.GetEnemyData(ID);

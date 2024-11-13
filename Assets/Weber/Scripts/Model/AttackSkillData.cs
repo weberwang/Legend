@@ -75,7 +75,7 @@ namespace Weber.Scripts.Model
         protected override void UpdateSkill(CharacterUnit characterUnit, SkillEffectStatValue learnSkill = null, BaseSkillHitEffect skillHitEffect = null)
         {
             CreateBattleProp(characterUnit);
-            if (skillHitEffect is not null)
+            if (skillHitEffect != null)
             {
                 for (int i = 0; i < _learnedSkillHitEffects.Count; i++)
                 {

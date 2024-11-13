@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8973b785474dec98bfa65abe70e8a3, type: 3}
+  m_Name: Healing Totem
+  m_EditorClassIdentifier: 
+  ID:
+    m_SerializedID:
+      m_String: 1463c928-3c14-4005-b5f8-785b08ee1050
+  classType: 1
+  maxLevel: 0
+  skillName: "\u6062\u590D\u56FE\u817E"
+  description: 
+  icon: {fileID: 0}
+  stats:
+  - stat: {fileID: 11400000, guid: f55236c3e2ee06343b9ce54c818c7338, type: 2}
+    value: 2
+    changeValueType: 0
+  - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+    value: 2
+    changeValueType: 1
+  countDown:
+    cooldown: 0
+    duration: 0
+    interval: 0
+    amount: -1
+  skillType: 3
+  weaponAsset: {fileID: 0}
+  battlePropPrefab: {fileID: 6420401587555046674, guid: ab5144b0996a27d49938fe16480f5c22,
+    type: 3}
+  skillHitEffects: []

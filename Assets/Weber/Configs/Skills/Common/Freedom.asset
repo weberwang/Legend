@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8973b785474dec98bfa65abe70e8a3, type: 3}
+  m_Name: Freedom
+  m_EditorClassIdentifier: 
+  ID:
+    m_SerializedID:
+      m_String: d7eea192-e1d3-498a-b61a-2dd4087412a5
+  classType: 1
+  maxLevel: 0
+  skillName: "\u81EA\u7531\u795D\u798F"
+  description: "\u52A0\u901F\u79FB\u52A8"
+  icon: {fileID: 0}
+  stats:
+  - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+    value: 6
+    ignoreInitialValue: 0
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
+    value: 0.5
+    ignoreInitialValue: 1
+    changeValueType: 1
+  countDown:
+    cooldown: 0
+    duration: 1
+    interval: 0
+    amount: -1
+  skillType: 3
+  weaponAsset: {fileID: 0}
+  battlePropPrefab: {fileID: -5729556485855985418, guid: 0fcb12b663d05304f81f90d8a4396979,
+    type: 3}
+  skillHitEffects: []

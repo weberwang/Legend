@@ -19,10 +19,10 @@ namespace Weber.Scripts.Legend.Skill
         private MeleeWeapon _meleeWeapon;
         private ShooterWeapon _shooterWeapon;
 
-        public async override void SetUnitTarget(CharacterUnit characterUnit, SkillData skillData)
+
+        protected async override void OnSetTarget()
         {
-            base.SetUnitTarget(characterUnit, skillData);
-            await CharacterUnit.Character.Combat.Equip(SkillData.weaponAsset, gameObject, new Args(characterUnit.gameObject));
+            await CharacterUnit.Character.Combat.Equip(SkillData.weaponAsset, gameObject, new Args(CharacterUnit.gameObject));
             OnEquip();
         }
 

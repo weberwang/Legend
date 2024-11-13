@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8973b785474dec98bfa65abe70e8a3, type: 3}
+  m_Name: Whirlwind
+  m_EditorClassIdentifier: 
+  ID:
+    m_SerializedID:
+      m_String: 7a46ce94-6b82-4c54-a07c-4547feaac95b
+  classType: 1
+  maxLevel: 0
+  skillName: "\u9B54\u6CD5\u98D3\u98CE"
+  description: "\u63A8\u5F00\u654C\u4EBA"
+  icon: {fileID: 0}
+  stats:
+  - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
+    value: 5
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
+    value: 1
+    changeValueType: 1
+  - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
+    value: 10
+    changeValueType: 1
+  countDown:
+    cooldown: 5
+    duration: 0
+    interval: 0
+    amount: -1
+  skillType: 3
+  weaponAsset: {fileID: 0}
+  battlePropPrefab: {fileID: 8486410423715835958, guid: edb2c67acfd88094e9ac5f9ad02bf2db,
+    type: 3}
+  skillHitEffects: []

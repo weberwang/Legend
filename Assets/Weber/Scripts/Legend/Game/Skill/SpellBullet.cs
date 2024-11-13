@@ -80,7 +80,7 @@ namespace Weber.Scripts.Legend.Skill
 
         private void Update()
         {
-            if (_effectInstance is not null)
+            if (_effectInstance != null)
             {
                 _impactEffectTime += Time.deltaTime;
                 if (_impactEffectTime >= _impactEffectDuration)
@@ -280,12 +280,12 @@ namespace Weber.Scripts.Legend.Skill
             if (_hits.Contains(hit.transform.gameObject)) return;
             _hits.Add(hit.transform.gameObject);
 
-            if (_impactSound is not null)
+            if (_impactSound != null)
             {
                 AudioManager.Instance.SoundEffect.Play(_impactSound, AudioConfigSoundEffect.Default, new Args(gameObject));
             }
 
-            if (_impactEffect is not null)
+            if (_impactEffect != null)
             {
                 var effectInstance = PoolManager.Instance.Pick(_impactEffect, 1);
                 effectInstance.transform.position = hit.point;

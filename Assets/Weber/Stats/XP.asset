@@ -20,32 +20,32 @@ MonoBehaviour:
   m_Info:
     m_Name:
       m_Property:
-        rid: 5668441645919765367
+        rid: 391964060689367179
     m_Acronym:
       m_Property:
-        rid: 5668441645919765368
+        rid: 391964060689367180
     m_Description:
       m_Property:
-        rid: 5668441645919765369
+        rid: 391964060689367181
     m_Icon:
       m_Property:
-        rid: 5668441645919765370
+        rid: 391964060689367182
     m_Color: {r: 1, g: 1, b: 1, a: 1}
   references:
     version: 2
     RefIds:
-    - rid: 5668441645919765367
+    - rid: 391964060689367179
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
         m_Value: Stat Name
-    - rid: 5668441645919765368
+    - rid: 391964060689367180
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
         m_Value: STA
-    - rid: 5668441645919765369
+    - rid: 391964060689367181
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
         m_Value: Description...
-    - rid: 5668441645919765370
+    - rid: 391964060689367182
       type: {class: GetSpriteNone, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data: 

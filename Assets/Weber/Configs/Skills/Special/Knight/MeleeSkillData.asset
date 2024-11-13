@@ -18,7 +18,7 @@ MonoBehaviour:
   classType: 0
   maxLevel: 10
   skillName: "\u65A9\u51FB"
-  description: 
+  description: "\u5411\u524D\u6325\u51FB\uFF0C\u5BF9\u51FB\u4E2D\u7684\u654C\u4EBA\u9020\u6210\u4F24\u5BB3"
   icon: {fileID: 0}
   stats:
   - stat: {fileID: 11400000, guid: 5a43d0d9a91b1f74b989e0c254be3beb, type: 2}
@@ -29,12 +29,6 @@ MonoBehaviour:
     changeValueType: 1
   - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
     value: 1
-    changeValueType: 1
-  - stat: {fileID: 11400000, guid: 5b6752d68e2ace64e961f83d13849d9c, type: 2}
-    value: 0
-    changeValueType: 1
-  - stat: {fileID: 11400000, guid: 02a20f1b89d7d1e4392fda044bc48e5a, type: 2}
-    value: 0
     changeValueType: 1
   countDown:
     cooldown: 2

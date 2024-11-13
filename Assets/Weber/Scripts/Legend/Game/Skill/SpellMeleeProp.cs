@@ -91,17 +91,14 @@ namespace Weber.Scripts.Legend.Skill
             target.OnSkillHit(this);
         }
 
-        public override bool UpdateSkill(SkillEffectStatValue learnSkill)
+        protected override void AfterUpdateSkill(SkillEffectStatValue learnSkill = null)
         {
-            if (!base.UpdateSkill(learnSkill))
+            if (learnSkill != null)
             {
-                return false;
+                var size = GetRuntimeStatDataValue(learnSkill.stat.ID.String);
+                renderObject.transform.localScale = Vector3.one * size / Convert.ToSingle(GetRuntimeStatData(learnSkill.stat.ID.String).Base);
+                _shape.ChangeSize(size);
             }
-
-            var size = GetRuntimeStatDataValue(learnSkill.stat.ID.String);
-            renderObject.transform.localScale = Vector3.one * size / Convert.ToSingle(GetRuntimeStatData(learnSkill.stat.ID.String).Base);
-            _shape.ChangeSize(size);
-            return true;
         }
 
         private void OnDrawGizmosSelected()

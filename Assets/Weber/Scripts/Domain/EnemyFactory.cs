@@ -23,8 +23,10 @@ namespace Weber.Scripts.Domain
         private const string ENEMY_MODEL_PATH = "Assets/Weber/Addressable/Prefabs/Characters/Enemies/Enemy_{0}.prefab";
         private const string ENEMY_SPAWN_PATH = "Assets/Weber/Addressable/Config/EnemySpawnConfig.asset";
         private const string ALL_ENEMY_PATH = "Assets/Weber/Addressable/Config/AllEnemyData.asset";
+        private const string XP_BALL_PATH = "Assets/Weber/Addressable/Prefabs/Items/XPBall.prefab";
 
         private GameObject _enemyPrefab;
+        private GameObject _xpBallPrefab;
         private AllEnemyData _allEnemyData;
 
         private Camera _mainCamera;
@@ -98,6 +100,7 @@ namespace Weber.Scripts.Domain
         {
             LoadEnemy();
             LoadEnemyConfig();
+            LoadXPBall();
             _groundMask = LayerMask.GetMask("Ground");
             _mainCamera = Camera.main;
         }
@@ -121,6 +124,13 @@ namespace Weber.Scripts.Domain
             var enemyModelPath = string.Format(ENEMY_MODEL_PATH, enemyID);
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enemyModelPath);
             await asyncOperationHandle.Task;
+        }
+
+        private async UniTask LoadXPBall()
+        {
+            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(XP_BALL_PATH);
+            await asyncOperationHandle.Task;
+            _xpBallPrefab = asyncOperationHandle.Result;
         }
 
         public void SpawnWaveEnemies(SpawnWave wave)
@@ -155,11 +165,28 @@ namespace Weber.Scripts.Domain
 
         private void OnEnemyDeath(CharacterUnit characterUnit)
         {
-            //todo 生成掉落物品
+            //todo 生成掉落物品,经验球或者道具
+
             EnemyKillCount++;
             Enemy enemy = characterUnit as Enemy;
             enemy.OnDeath -= OnEnemyDeath;
             Signals.Emit(new SignalArgs(SignalNames.ENEMY_DEATH, enemy.gameObject));
+            DelaySpawnBall(enemy);
+            if (enemy.EnemyData.type == EnemyType.LevelBoss)
+            {
+                //最终Boss被击败，胜利
+            }
+        }
+
+        private void DelaySpawnBall(Enemy enemy)
+        {
+            var position = enemy.transform.position;
+            var awardXP = enemy.EnemyData.awardXP;
+            var _xpBallInstance = PoolManager.Instance.Pick(_xpBallPrefab, 1);
+            _xpBallInstance.transform.position = position;
+            var xpItem = _xpBallInstance.GetComponent<XPDropItem>();
+            xpItem.InitialValue(awardXP);
+            Debug.Log("掉落经验 :" + awardXP);
         }
 
         private bool SpawnEnemyOffScreen(out Vector3 position)
@@ -315,5 +342,14 @@ namespace Weber.Scripts.Domain
 
             return null;
         }
+
+        // private DropItem SpawnDropItem(Enemy enemy)
+        // {
+        //     var dropInstance = PoolManager.Instance.Pick(_enemyPrefab, enemy.transform.position, Quaternion.identity, 1);
+        //     var dropItem = dropInstance.Get<DropItem>();
+        //     dropItem.InitialValue(value);
+        //     _dropItems.Add(dropItem);
+        //     return dropItem;
+        // }
     }
 }

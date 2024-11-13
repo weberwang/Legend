@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Weber.Scripts.Domain;
 using Weber.Scripts.Legend.Unit;
+using Weber.Scripts.Model;
 
 namespace Weber.Scripts.Legend.Skill
 {
@@ -48,7 +49,7 @@ namespace Weber.Scripts.Legend.Skill
         private bool IsTracer => _mode == SpellBulletMode.UseTracer;
         private bool HasImpactEffect => _impactEffect is not null;
 
-        private float MaxDistance => GetRuntimeStatDataValue(_maxDistance.ID.String);
+        private float MaxDistance;
 
         public override void OnActive()
         {
@@ -57,6 +58,11 @@ namespace Weber.Scripts.Legend.Skill
             {
                 Shot(_muzzles[i]);
             }
+        }
+
+        protected override void AfterUpdateSkill(SkillEffectStatValue learnSkill)
+        {
+            MaxDistance = GetRuntimeStatDataValue(_maxDistance.ID.String);
         }
 
         private void Shot(SpellMuzzle muzzle)

@@ -1579,6 +1579,7 @@ GameObject:
   - component: {fileID: 6536450616772510291}
   - component: {fileID: 8779637491638483556}
   - component: {fileID: 7366335165345189467}
+  - component: {fileID: 5521456625190182199}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -1763,10 +1764,20 @@ MonoBehaviour:
         m_Value: 1
   m_OverrideStats:
     m_Keys:
-    - m_String: XP
     - m_String: Armor
     - m_String: Max-Health
+    - m_String: Move-Speed
+    - m_String: Damage
+    - m_String: Health-Regeneration
     m_Values:
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
     - m_IsExpanded: 0
       m_ChangeBase:
         m_IsEnabled: 0
@@ -1816,6 +1827,23 @@ MonoBehaviour:
   _specialAttackSkillDatas: []
   _commonSkillDatas: []
   _baseSkillDatas: []
+--- !u!114 &5521456625190182199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3227872230208166158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31b96ce7c71747448dec0965ae9d471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageFloatingTextPrefab: {fileID: 7281942847487205461, guid: ef007ecb4293341458c161d1b7b5b013,
+    type: 3}
+  _restoreFloatingTextPrefab: {fileID: 7281942847487205461, guid: ef007ecb4293341458c161d1b7b5b013,
+    type: 3}
+  _offset: {x: 0.5, y: 1}
 --- !u!1 &3279117850756032092
 GameObject:
   m_ObjectHideFlags: 0

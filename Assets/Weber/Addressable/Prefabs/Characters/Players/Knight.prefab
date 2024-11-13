@@ -1830,6 +1830,7 @@ GameObject:
   - component: {fileID: 3767397507409206557}
   - component: {fileID: 6875256263279085305}
   - component: {fileID: 3908093639801720990}
+  - component: {fileID: 3319536832399070639}
   m_Layer: 10
   m_Name: Knight
   m_TagString: Untagged
@@ -1996,6 +1997,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _skillManager: {fileID: 6875256263279085305}
+  _hurtEffect: {fileID: 0}
+  _healthEffect: {fileID: 0}
 --- !u!114 &6875256263279085305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,8 +2017,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d320b015379003d4a8a80a1b2c986828, type: 2}
   - {fileID: 11400000, guid: 36ec8c628e007954085ee7aeb15c9800, type: 2}
   - {fileID: 11400000, guid: a2e41ca24312c264a858f7107c2c3ba0, type: 2}
-  _commonSkillDatas: []
-  _baseSkillDatas: []
+  _commonSkillDatas:
+  - {fileID: 11400000, guid: f0a1f30ce80390e459abc4e08acc7939, type: 2}
+  - {fileID: 11400000, guid: 24f8c0757bc35624c995345f7598f335, type: 2}
+  - {fileID: 11400000, guid: d728eda46ca23b94881eb1fa1bb2bd42, type: 2}
+  - {fileID: 11400000, guid: 683567ba27e8019428567247a5cb2169, type: 2}
+  _baseSkillDatas:
+  - {fileID: 11400000, guid: 961df2e5918e91c42b7193e046ad5c49, type: 2}
+  - {fileID: 11400000, guid: 8ab959d8aadc359468d392d429e1f3f9, type: 2}
+  - {fileID: 11400000, guid: 0c2cdeb57ce7f6f4c804c37bdf321f4a, type: 2}
+  - {fileID: 11400000, guid: c661e9e6880f8864eb97a80f6f43e37a, type: 2}
+  - {fileID: 11400000, guid: bd7648f57a42ae347a1e33a6f177e71c, type: 2}
+  - {fileID: 11400000, guid: 627883908147e5d42b035a1c25439c2c, type: 2}
+  - {fileID: 11400000, guid: 333c4f5c2cf9fac44b721bafb125e2df, type: 2}
+  - {fileID: 11400000, guid: 8f125b676be2353409112c05a3f08f9a, type: 2}
+  - {fileID: 11400000, guid: a6f47e968ff6eb640a722e8434bc7581, type: 2}
+  - {fileID: 11400000, guid: d22b6530ae464944684fdf2117d88ad4, type: 2}
+  - {fileID: 11400000, guid: 3233cb83672390344bd117412de6f0e6, type: 2}
+  - {fileID: 11400000, guid: 530e2a0fafadd944d96b760535b33c2c, type: 2}
 --- !u!114 &3908093639801720990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2032,7 +2051,12 @@ MonoBehaviour:
   m_OverrideAttributes:
     m_Keys:
     - m_String: Health
+    - m_String: XP
     m_Values:
+    - m_IsExpanded: 0
+      m_ChangeStartPercent:
+        m_IsEnabled: 0
+        m_Value: 1
     - m_IsExpanded: 0
       m_ChangeStartPercent:
         m_IsEnabled: 0
@@ -2052,7 +2076,6 @@ MonoBehaviour:
     - m_String: Pick-Distance
     - m_String: Rerolls
     - m_String: Spell-Size
-    - m_String: XP
     - m_String: XP-Gain
     m_Values:
     - m_IsExpanded: 0
@@ -2111,10 +2134,21 @@ MonoBehaviour:
       m_ChangeBase:
         m_IsEnabled: 0
         m_Value: 1
-    - m_IsExpanded: 0
-      m_ChangeBase:
-        m_IsEnabled: 0
-        m_Value: 1
+--- !u!114 &3319536832399070639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448646531734228183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d140e744ed534005ac400031aeb809b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xpLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &8571385439182221235
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ namespace Weber.Scripts.Model
         public virtual bool Upgrade(CharacterUnit characterUnit, SkillEffectStatValue learnSkill = null, BaseSkillHitEffect skillHitEffect = null)
         {
             // if (!Learned) return false;
-            if (Level < maxLevel)
+            if (maxLevel <= 0 || Level < maxLevel)
             {
                 Level++;
                 UpdateSkill(characterUnit, learnSkill, skillHitEffect);
@@ -76,6 +76,7 @@ namespace Weber.Scripts.Model
     {
         public Stat stat;
         public float value;
+        public bool ignoreInitialValue = false;
         public ModifierType changeValueType = ModifierType.Constant;
 
         public SkillEffectStatValue(Stat stat, float value, ModifierType changeValueType)

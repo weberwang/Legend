@@ -57,7 +57,17 @@ MonoBehaviour:
     - m_String: Critical-Chance
     - m_String: Critical-Damage
     - m_String: Spell-Size
+    - m_String: Move-Speed
+    - m_String: Health-Regeneration
     m_Values:
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
     - m_IsExpanded: 0
       m_ChangeBase:
         m_IsEnabled: 0
@@ -90,9 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e6fa77f80f480b82f57d8a46da1735, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderObject: {fileID: 0}
+  renderObject: {fileID: 0}
   _bindType: 0
   _followSpeed: 0
+  _distance: 0
   _handleField:
     m_Type: 0
     m_Bone:

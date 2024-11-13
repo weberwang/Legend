@@ -42,8 +42,9 @@ MonoBehaviour:
     - rid: 5668441423885893862
     - rid: 5668441423885893863
     - rid: 5668441423885893864
-    - rid: 5668441645919765376
     - rid: 5668441423885893865
+    - rid: 391964060689367187
+    - rid: 391964085004533851
   references:
     version: 2
     RefIds:
@@ -54,6 +55,32 @@ MonoBehaviour:
         m_IsEnabled: 1
         m_IsHidden: 0
         m_Stat: {fileID: 11400000, guid: 9878963ba6e602b4f86d3bb5313de1dc, type: 2}
+        m_ChangeBase:
+          m_IsEnabled: 0
+          m_Value: 100
+        m_ChangeFormula:
+          m_IsEnabled: 0
+          m_Value: {fileID: 0}
+    - rid: 391964060689367187
+      type: {class: StatItem, ns: GameCreator.Runtime.Stats, asm: GameCreator.Runtime.Stats}
+      data:
+        m_Breakpoint: 0
+        m_IsEnabled: 1
+        m_IsHidden: 0
+        m_Stat: {fileID: 11400000, guid: a44116a6cd82e724b824b4b7d4954659, type: 2}
+        m_ChangeBase:
+          m_IsEnabled: 0
+          m_Value: 100
+        m_ChangeFormula:
+          m_IsEnabled: 0
+          m_Value: {fileID: 0}
+    - rid: 391964085004533851
+      type: {class: StatItem, ns: GameCreator.Runtime.Stats, asm: GameCreator.Runtime.Stats}
+      data:
+        m_Breakpoint: 0
+        m_IsEnabled: 1
+        m_IsHidden: 0
+        m_Stat: {fileID: 11400000, guid: a39c5818502bf0f42a3fcf2aa8eb25cf, type: 2}
         m_ChangeBase:
           m_IsEnabled: 0
           m_Value: 100
@@ -247,19 +274,6 @@ MonoBehaviour:
         m_IsEnabled: 1
         m_IsHidden: 0
         m_Stat: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
-        m_ChangeBase:
-          m_IsEnabled: 0
-          m_Value: 100
-        m_ChangeFormula:
-          m_IsEnabled: 0
-          m_Value: {fileID: 0}
-    - rid: 5668441645919765376
-      type: {class: StatItem, ns: GameCreator.Runtime.Stats, asm: GameCreator.Runtime.Stats}
-      data:
-        m_Breakpoint: 0
-        m_IsEnabled: 1
-        m_IsHidden: 0
-        m_Stat: {fileID: 11400000, guid: a521d0b7a411bc64cbcfb097194990d9, type: 2}
         m_ChangeBase:
           m_IsEnabled: 0
           m_Value: 100

@@ -1,6 +1,8 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using GameCreator.Runtime.Common;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Weber.Widgets.Popup
@@ -17,6 +19,8 @@ namespace Weber.Widgets.Popup
 
         protected object _data = null;
 
+        [field: NonSerialized] public event UnityAction EventClose;
+
         // private Tweener _showTween;
         // private Tweener _hideTween;
 
@@ -24,15 +28,10 @@ namespace Weber.Widgets.Popup
         {
             if (closeButton != null)
             {
-                closeButton.onClick.AddListener(OnClickClose);
+                closeButton.onClick.AddListener(Close);
             }
 
             // content.Require<CanvasGroup>().alpha = 0;
-        }
-
-        private void OnClickClose()
-        {
-            Close();
         }
 
         protected void Start()
@@ -59,6 +58,17 @@ namespace Weber.Widgets.Popup
             OnStart();
         }
 
+        private void OnDestroy()
+        {
+            if (Application.isPlaying)
+            {
+                OnClose();
+            }
+        }
+
+        protected virtual void OnClose()
+        {
+        }
 
         protected virtual void OnStart()
         {

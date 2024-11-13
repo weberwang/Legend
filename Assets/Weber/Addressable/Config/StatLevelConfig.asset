@@ -16,7 +16,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: c4ba38a16342f5d438f30d32b8c309f0, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 5
     - rarity: 1
       value: 0
     - rarity: 2
@@ -40,7 +40,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 5b6752d68e2ace64e961f83d13849d9c, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -52,7 +52,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 02a20f1b89d7d1e4392fda044bc48e5a, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -64,7 +64,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 1e3713e306809ac46a9b67ea39b47d0c, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -76,7 +76,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: f55236c3e2ee06343b9ce54c818c7338, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 1
     - rarity: 1
       value: 0
     - rarity: 2
@@ -88,7 +88,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 029af27b46b01d448a42d30956de691a, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 1
     - rarity: 1
       value: 0
     - rarity: 2
@@ -100,7 +100,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 89675af48f19b3440bab974c7570d4a7, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -112,7 +112,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 2c653e6daf18d5b46b3035117a18b9be, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -124,7 +124,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: b6021fc4b181aed4aad9e3384a940d45, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.1
     - rarity: 1
       value: 0
     - rarity: 2
@@ -136,7 +136,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 87284fdd842f41a46aa1f86adfe54db7, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 1
     - rarity: 1
       value: 0
     - rarity: 2
@@ -148,7 +148,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 6d97474f1b290f1408d414b16237fc5d, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.05
     - rarity: 1
       value: 0
     - rarity: 2
@@ -160,7 +160,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 1c00938ddaa124c4e8956a030e7853ff, type: 2}
     rarityValues:
     - rarity: 0
-      value: -0.05
+      value: 0.1
     - rarity: 1
       value: 0
     - rarity: 2

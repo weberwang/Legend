@@ -15,8 +15,8 @@ MonoBehaviour:
   m_ID:
     m_String: Level
   m_Data:
-    m_Base: 1
-    m_Formula: {fileID: 0}
+    m_Base: 99
+    m_Formula: {fileID: 11400000, guid: 25beaf51bfb26f249829cd45c3a2a307, type: 2}
   m_Info:
     m_Name:
       m_Property:

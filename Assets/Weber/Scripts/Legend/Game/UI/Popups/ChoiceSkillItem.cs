@@ -25,18 +25,29 @@ namespace Weber.Scripts.Legend.Game.UI.Popups
             _upgradeSkillData = upgradeSkillData;
             var skillData = upgradeSkillData.skillData;
             _nameText.text = skillData.skillName;
-            _descriptionText.text = skillData.description;
             _icon.sprite = skillData.icon;
+            _descriptionText.text = skillData.description;
             if (upgradeSkillData.skillEffectStatValue != null)
             {
-                var skillValue = upgradeSkillData.skillEffectStatValue.value;
-                _valueText.text = upgradeSkillData.skillEffectStatValue.changeValueType == ModifierType.Constant ? skillValue.ToString() : skillValue * 100 + "%";
+                //提升已经学习的技能
+                var skillEffectStatValue = upgradeSkillData.skillEffectStatValue;
+                var value = skillEffectStatValue.value;
+                var valueString = skillEffectStatValue.changeValueType == ModifierType.Constant ? value.ToString() : skillEffectStatValue.value * 100 + "%";
+                if (skillData.classType == ClassType.Base)
+                {
+                    _valueText.text = value > 0 ? "+" + valueString : valueString;
+                }
+                else
+                {
+                    _valueText.text = skillEffectStatValue.stat.GetName(null) + " " + (value > 0 ? "+" + valueString : valueString);
+                }
+
                 _rarityText.text = Utils.GetSkillRarity(upgradeSkillData.skillRarity);
             }
             else
             {
                 _valueText.text = "";
-                _rarityText.text = "";
+                _rarityText.text = Utils.GetSkillRarity(upgradeSkillData.skillRarity);
             }
         }
 

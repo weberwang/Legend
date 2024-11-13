@@ -10,9 +10,10 @@ namespace Weber.Scripts.Model
     }
 
     [Serializable]
-    public class EnemyData:CharacterData
+    public class EnemyData : CharacterData
     {
         public EnemyType type;
+        public int awardXP;
     }
 
     [Serializable]
@@ -20,6 +21,7 @@ namespace Weber.Scripts.Model
     {
         Normal,
         Elite,
-        Boss
+        Boss,
+        LevelBoss
     }
 }

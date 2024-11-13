@@ -37,7 +37,7 @@ MonoBehaviour:
     - rid: 5668441423885893811
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
-        m_Value: Stat Name
+        m_Value: "\u66B4\u51FB\u4F24\u5BB3"
     - rid: 5668441423885893812
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
@@ -45,7 +45,7 @@ MonoBehaviour:
     - rid: 5668441423885893813
       type: {class: GetStringString, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data:
-        m_Value: Description...
+        m_Value: "\u66B4\u51FB\u65F6\u9020\u6210\u66F4\u591A\u7684\u4F24\u5BB3"
     - rid: 5668441423885893814
       type: {class: GetSpriteNone, ns: GameCreator.Runtime.Common, asm: GameCreator.Runtime.Core}
       data: 

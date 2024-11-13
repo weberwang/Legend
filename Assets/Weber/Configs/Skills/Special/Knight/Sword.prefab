@@ -133,6 +133,8 @@ MonoBehaviour:
     - m_String: Critical-Chance
     - m_String: Critical-Damage
     - m_String: Spell-Size
+    - m_String: Move-Speed
+    - m_String: Health-Regeneration
     m_Values:
     - m_IsExpanded: 0
       m_ChangeBase:
@@ -143,6 +145,14 @@ MonoBehaviour:
         m_IsEnabled: 0
         m_Value: 1
     - m_IsExpanded: 1
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
+      m_ChangeBase:
+        m_IsEnabled: 0
+        m_Value: 1
+    - m_IsExpanded: 0
       m_ChangeBase:
         m_IsEnabled: 0
         m_Value: 1
@@ -169,6 +179,7 @@ MonoBehaviour:
   renderObject: {fileID: 8886774153220807673}
   _bindType: 3
   _followSpeed: 0
+  _distance: 0
   _handleField:
     m_Type: 0
     m_Bone:

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Weber.Scripts.Common.Utils
 {
@@ -16,6 +17,8 @@ namespace Weber.Scripts.Common.Utils
         public double Cooldown => cooldown;
         private double _interval;
         private double _duration;
+
+        public double Duration => duration;
         private int _amount;
 
         private bool _end = false;
@@ -24,6 +27,9 @@ namespace Weber.Scripts.Common.Utils
         private bool _turnOn = false;
 
         public float Progress => (float)(_cooldown / cooldown);
+
+        public event UnityAction EventCooldown;
+        public event UnityAction EventTrigger;
 
         public CountDown()
         {
@@ -58,10 +64,11 @@ namespace Weber.Scripts.Common.Utils
         public void Start()
         {
             _cooldown = 0;
-            _duration = duration;
+            _duration = 0;
             _interval = interval;
             _amount = 0;
             _end = false;
+            _turnOn = true;
         }
 
         public CountDown Clone()
@@ -69,48 +76,77 @@ namespace Weber.Scripts.Common.Utils
             return new CountDown(cooldown, duration, interval, amount);
         }
 
-        public bool OnUpdate()
+        public void OnUpdate()
         {
-            if (_end) return false;
+            if (_end) return;
             OnUpdateCooldown();
             if (!_turnOn)
             {
-                return false;
+                return;
             }
 
-            if (duration <= 0 && interval <= 0)
+            //有持续时间
+            if (!UpdateDuration())
             {
-                CheckAmount();
-                _turnOn = false;
-                return true;
+                //进入冷却
+                return;
             }
 
-            _interval -= Time.deltaTime;
-            if (_interval <= 0)
+            //立刻触发
+            if (interval <= 0)
             {
-                if (duration <= 0)
+                if (_duration > 0)
                 {
-                    CheckAmount();
+                    //持续中
+                    return;
+                }
+
+                //duration也为0时触发一次进入冷却
+                CheckAmount();
+                _duration = duration;
+                EventTrigger?.Invoke();
+                if (_duration <= 0)
+                {
                     _turnOn = false;
                 }
 
-                _interval = interval;
-                return true;
+                return;
             }
 
-            if (_duration > 0)
+            UpdateInterval();
+        }
+
+        private bool UpdateDuration()
+        {
+            if (duration > 0 && _duration > 0)
             {
                 _duration -= Time.deltaTime;
                 if (_duration <= 0)
                 {
                     CheckAmount();
+                    _duration = duration;
                     _turnOn = false;
+                    EventCooldown?.Invoke();
                     return false;
                 }
             }
 
+            return true;
+        }
 
-            return false;
+        private void UpdateInterval()
+        {
+            if (interval > 0 && _interval > 0)
+            {
+                _interval -= Time.deltaTime;
+                if (_interval <= 0)
+                {
+                    CheckAmount();
+                    _interval = interval;
+                    _duration = duration;
+                    EventTrigger?.Invoke();
+                }
+            }
         }
 
         public void Pause()
@@ -132,8 +168,8 @@ namespace Weber.Scripts.Common.Utils
             else
             {
                 _cooldown = cooldown;
-                _duration = duration;
                 _interval = interval;
+                _duration = 0;
                 _turnOn = true;
             }
         }
