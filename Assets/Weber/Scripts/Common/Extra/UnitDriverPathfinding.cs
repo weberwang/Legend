@@ -32,6 +32,7 @@ namespace Weber.Scripts.Common.Extra
         [SerializeField] private PropertyGetGameObject m_Target = GetGameObjectPlayer.Create();
         [SerializeField] private float m_RandomRaduis = 1;
         [SerializeField] private float m_NearDistance = 1;
+        [SerializeField] private float _stopDistance = 0.5f;
         [SerializeField] private float m_CheckPathInterval = 0.1f;
 
         public bool CanMove
@@ -88,6 +89,10 @@ namespace Weber.Scripts.Common.Extra
             if (Vector3.Distance(Transform.position, _targetObject.transform.position) < m_NearDistance)
             {
                 _offsetRadius = 0;
+                if (Vector3.Distance(Transform.position, _targetObject.transform.position) <= _stopDistance)
+                {
+                    _AIPath.canMove = false;
+                }
             }
             else
             {

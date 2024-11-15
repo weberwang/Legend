@@ -210,8 +210,8 @@ MonoBehaviour:
     - rid: 5668441469287399665
       type: {class: ClipMeleePhases, ns: GameCreator.Runtime.Melee, asm: GameCreator.Runtime.Melee}
       data:
-        m_Time: 0.33333334
-        m_Duration: 0.25
+        m_Time: 0.375
+        m_Duration: 0.041666668
     - rid: 5668441469287399666
       type: {class: ClipMeleeCancel, ns: GameCreator.Runtime.Melee, asm: GameCreator.Runtime.Melee}
       data:

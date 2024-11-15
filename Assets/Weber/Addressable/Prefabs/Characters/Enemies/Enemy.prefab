@@ -1650,6 +1650,7 @@ MonoBehaviour:
             rid: 391963828669907064
         m_RandomRaduis: 1
         m_NearDistance: 1
+        _stopDistance: 0.5
         m_CheckPathInterval: 0.1
     - rid: 391963828669907063
       type: {class: AxonometryNone, ns: GameCreator.Runtime.Characters, asm: GameCreator.Runtime.Core}

@@ -165,17 +165,17 @@ namespace Weber.Scripts.Domain
 
         private void OnEnemyDeath(CharacterUnit characterUnit)
         {
-            //todo 生成掉落物品,经验球或者道具
-
             EnemyKillCount++;
             Enemy enemy = characterUnit as Enemy;
-            enemy.OnDeath -= OnEnemyDeath;
-            Signals.Emit(new SignalArgs(SignalNames.ENEMY_DEATH, enemy.gameObject));
-            DelaySpawnBall(enemy);
+            //todo 生成掉落物品,经验球或者道具
             if (enemy.EnemyData.type == EnemyType.LevelBoss)
             {
                 //最终Boss被击败，胜利
+                return;
             }
+            enemy.OnDeath -= OnEnemyDeath;
+            Signals.Emit(new SignalArgs(SignalNames.ENEMY_DEATH, enemy.gameObject));
+            DelaySpawnBall(enemy);
         }
 
         private void DelaySpawnBall(Enemy enemy)

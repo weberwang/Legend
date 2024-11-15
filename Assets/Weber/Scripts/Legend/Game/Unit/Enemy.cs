@@ -35,6 +35,15 @@ namespace Weber.Scripts.Legend.Unit
             }
         }
 
+        protected override void Death()
+        {
+            base.Death();
+            if (EnemyData.type == EnemyType.LevelBoss)
+            {
+                //todo 通关胜利
+            }
+        }
+
         private void UpdateAttributes()
         {
             foreach (var skillEffectStatValue in _characterData.skillValues)
